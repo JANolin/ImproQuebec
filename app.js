@@ -7,7 +7,7 @@ const app = express()
 const port = 3000
 
 
-//init the logger middleware 
+//Init the logger middleware 
 app.use(logger)
 
 //middleware for handlebars
