@@ -2,6 +2,7 @@ const express = require('express')
 const path = require('path')
 const logger = require('./middlewares/logger')
 const exphbs = require('express-handlebars')
+const Models = require('./models/models')
 
 const app = express()
 const port = 3000
@@ -28,6 +29,11 @@ app.use('/api/members', require('./routes/api/members'))
 app.use('/match', require('./routes/match/match'))
 
 app.post('/', (req, res) => {
+    const userConnection = new Models.User({username : req.body.inputUsername1,
+                        password : req.body.inputPassword1})
+    userConnection.save().then(() => console.log("DB: $USER$ INFOS SAVED"))
+
+
     console.log(req.body.inputPassword1)
     res.redirect('/match')
 })
