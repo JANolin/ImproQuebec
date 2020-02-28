@@ -3,7 +3,13 @@ const router = express.Router()
 const Model = require('../../models/models')
 
 router.get('/', (req, res) => {
-    res.render('match')
+    if(req.session.key)
+    {
+        res.render('match', {email: req.session.key["user_email"] })
+    }else
+    {
+        res.redirect('/')
+    }
 })
 
 router.get('/:id', (req, res) => {
