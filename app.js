@@ -23,8 +23,8 @@ const async = require('async')
 const mysql = require('mysql')
 
 /**
- SETUP DE LA CONNEXION AVEC MSQL 
-* */
+ SETUP DE LA CONNEXION AVEC MYSQL 
+**/
 const pool = mysql.createPool({
     connectionLimit : 100,
     host : 'localhost',
@@ -40,7 +40,7 @@ const pool = mysql.createPool({
 **/
 app.use(session({
     secret: 'lpestcaca',
-    store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260}),
+    store: new redisStore({ host: 'localhost', port: 6379, client: client, ttl :  260}),
     saveUninitialized: false,
     resave: false
 }));
@@ -53,7 +53,8 @@ function handle_database(req,type,callback) {
     async.waterfall([
         function(callback) {
             pool.getConnection(function(err,connection){
-                if(err) {
+                if (err) {
+                    console.log('asdfasdf');
                     callback(true);
                 } else {
                     callback(null,connection);
@@ -64,7 +65,8 @@ function handle_database(req,type,callback) {
             var SQLquery;
             switch(type) {
                 case "login" :
-                    SQLquery = "SELECT * from user_login WHERE user_email='"+req.body.inputUsername1+"' AND `user_password`='"+req.body.inputPassword1+"'";
+                    SQLquery = "SELECT * from user_login WHERE 'user_email'='"+req.body.inputUsername1+"' AND 'user_password'='"+req.body.inputPassword1+"'";
+                    console.log(SQLquery);
                     break;
                 case "register" :
                     SQLquery = "INSERT into user_login(user_email,user_password,user_name) VALUES ('"+req.body.user_email+"','"+req.body.user_password+"','"+req.body.user_name+"')";
