@@ -54,7 +54,6 @@ function handle_database(req,type,callback) {
         function(callback) {
             pool.getConnection(function(err,connection){
                 if (err) {
-                    console.log('asdfasdf');
                     callback(true);
                 } else {
                     callback(null,connection);
@@ -65,8 +64,7 @@ function handle_database(req,type,callback) {
             var SQLquery;
             switch(type) {
                 case "login" :
-                    SQLquery = "SELECT * from user_login WHERE 'user_email'='"+req.body.inputUsername1+"' AND 'user_password'='"+req.body.inputPassword1+"'";
-                    console.log(SQLquery);
+                    SQLquery = "SELECT * from user_login WHERE user_email='"+req.body.inputUsername1+"' AND user_password='"+req.body.inputPassword1+"'";
                     break;
                 case "register" :
                     SQLquery = "INSERT into user_login(user_email,user_password,user_name) VALUES ('"+req.body.user_email+"','"+req.body.user_password+"','"+req.body.user_name+"')";
@@ -78,24 +76,30 @@ function handle_database(req,type,callback) {
         },
         function(connection,SQLquery,callback) {
             connection.query(SQLquery,function(err,rows){
-                connection.release();
+                connection.release()
                 if(!err) {
                     if(type === "login") {
-                        callback(rows.length === 0 ? false : rows[0]);
+                        if(rows == undefined || rows.length < 1)
+                        {
+                            callback(null)
+                        }else
+                        {
+                            callback(rows[0])
+                        }
                     } else {
-                        callback(false);
+                        callback(false)
                     }
                 } else {
-                    callback(true);
+                    callback(true)
                 }
             });
         }],
         //PERMET LE RETOUR APRES LE CALL ASYNC
         function(result){
             if(typeof(result) === "boolean" && result === true) {
-                callback(null);
+                callback(null)
             } else {
-                callback(result);
+                callback(result)
             }
         });
 }
@@ -131,7 +135,7 @@ app.use('/match', require('./routes/match/match'))
 app.post('/', (req, res) => {
 
     handle_database(req,"login",function(response){
-        //SI LA REQUETE A PLANTE
+        //SI LA REQUETE A PLANTE/ LE COMPTE EXISTE PAS
         if(response === null) {
                 res.redirect('/')
 

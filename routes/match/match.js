@@ -6,6 +6,12 @@ router.get('/', (req, res) => {
     if(req.session.key)
     {
         res.render('match', {email: req.session.key["user_email"] })
+
+        Model.Match.find(function (err, match) {
+            if (err) return console.error(err);
+            console.log(match);
+        })
+
     }else
     {
         res.redirect('/')
