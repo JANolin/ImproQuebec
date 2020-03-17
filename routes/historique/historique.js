@@ -67,6 +67,7 @@ router.get('/', (req, res) => { if(req.session.key) {
             current_match.inputPointageEquipeHote1= match[i].inputPointageEquipeHote1
             current_match.inputPointageEquipeVisiteuse1= match[i].inputPointageEquipeVisiteuse1
             current_match.inputEquipeGagnante1= match[i].inputEquipeGagnante1
+            current_match.id= match[i]._id;
             all_history.push(current_match)
 
         }

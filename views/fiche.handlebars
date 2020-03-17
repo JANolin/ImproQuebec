@@ -7,21 +7,22 @@
             <th scope="col">Pointage hôte</th>
             <th scope="col">Pointage visiteur</th>
             <th scope="col">Équipe gagnante</th>
-            <th scope="col">    </th>
         </tr>
     </thead>
     <tbody>
         {{#each test}}
         <tr>
             {{#each this}}
-                {{#unless @last}}
                 <td>{{this}}</td>
-                {{/unless}}
-                {{#if @last}}
-                <td><a class="nav-link" href="/fiche?id={{this}}">Fiche</a></td>
-                {{/if}}
             {{/each}}
         </tr>
         {{/each}}
     </tbody>
 </table>
+
+<div>
+    <ul>
+        <li>{{inputCegepReceveur1}}</li>
+        <li>{{inputCegepVisiteur1}}</li>
+    </ul>
+</div>

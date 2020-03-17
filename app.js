@@ -132,6 +132,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/members', require('./routes/api/members'))
 app.use('/match', require('./routes/match/match'))
 app.use('/historique', require('./routes/historique/historique'))
+app.use('/fiche', require('./routes/fiche/fiche'))
 
 app.post('/', (req, res) => {
 
