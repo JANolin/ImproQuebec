@@ -2,7 +2,7 @@
 
 ## Description
 
-ImproQuebec est une plateforme web pour la diffusion et le partage d'informations en lien avec la ligue d'improvisation des Pamplemousses. 
+ImproQuebec est un plateforme web pour la diffusion et le partage d'informations en lien avec la ligue d'improvisation des Pamplemousses. 
 
 BdeB 2020
 
