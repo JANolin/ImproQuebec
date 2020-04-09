@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
         Model.Match.find(function (err, match) {
             if (err) return console.error(err);
-            console.log(match);
+            //console.log(match);
         })
 
     }else
@@ -85,7 +85,7 @@ router.post('/', (req, res) => {
 
     matchReport.save().then(() => console.log("DB: $MATCH$ INFOS SAVED"))
 
-    console.log(req.body)
+    //console.log(req.body)
     res.redirect('/match')
 })
 
