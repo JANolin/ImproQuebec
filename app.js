@@ -5,7 +5,6 @@ const exphbs = require('express-handlebars')
 const Models = require('./models/models')
 const handler_db = require('./models/requests')
 
-
 const app = express()
 const port = 3000
 
@@ -32,68 +31,6 @@ app.use(session({
     saveUninitialized: false,
     resave: false
 }));
-
-
-/**
- FONCTION QUI GERE LES REQUETES ASYNC A LA DB MYSQL
-**/
-
-/**
-function handle_database(req,type,callback) {
-    async.waterfall([
-        function(callback) {
-            pool.getConnection(function(err,connection){
-                if (err) {
-                    callback(true);
-                } else {
-                    callback(null,connection);
-                }
-            });
-        },
-        function(connection,callback) {
-            var SQLquery;
-            switch(type) {
-                case "login" :
-                    SQLquery = "SELECT * from user_login WHERE user_email='"+req.body.inputUsername1+"' AND user_password='"+req.body.inputPassword1+"'";
-                    break;
-                case "register" :
-                    SQLquery = "INSERT into user_login(user_email,user_password,user_name) VALUES ('"+req.body.user_email+"','"+req.body.user_password+"','"+req.body.user_name+"')";
-                    break;
-                default :
-                    break;
-            }
-            callback(null,connection,SQLquery);
-        },
-        function(connection,SQLquery,callback) {
-            connection.query(SQLquery,function(err,rows){
-                connection.release()
-                if(!err) {
-                    if(type === "login") {
-                        if(rows == undefined || rows.length < 1)
-                        {
-                            callback(null)
-                        }else
-                        {
-                            callback(rows[0])
-                        }
-                    } else {
-                        callback(false)
-                    }
-                } else {
-                    callback(true)
-                }
-            });
-        }],
-        //PERMET LE RETOUR APRES LE CALL ASYNC
-        function(result){
-            if(typeof(result) === "boolean" && result === true) {
-                callback(null)
-            } else {
-                callback(result)
-            }
-        });
-}
-**/
 
 //Init the logger middleware 
 app.use(logger)
