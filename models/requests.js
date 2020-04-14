@@ -1,6 +1,11 @@
 const express = require('express')
 
 /**
+ IMPORT POUR DOTENV 
+**/
+const dotenv = require('dotenv').config();
+
+/**
  IMPORT POUR MYSQL 
 **/
 const async = require('async')
@@ -10,16 +15,15 @@ const mysql = require('mysql')
  SETUP DE LA CONNEXION AVEC MYSQL 
 **/
 const pool = mysql.createPool({
-    connectionLimit : 100,
-    host : 'localhost',
-    user : 'chien',
-    password : '1234',
-    database : 'improquebec',
-    debug : false
+    connectionLimit : process.env.DB_CONNECTION_LIMIT,
+    host : process.env.DB_HOST,
+    user : process.env.DB_USERNAME,
+    password : process.env.DB_PASSWORD,
+    database : process.env.DB_DATABASE
 });
 
 /**
- FONCTION QUI GERE LES REQUETES ASYNC A LA DB MYSQL
+ FONCTION QUI GERE LES REQUETES ASYNC WATERFALL A LA DB MYSQL
 **/
 function handle_database(req,type,callback) {
     async.waterfall([
