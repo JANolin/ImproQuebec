@@ -40,7 +40,7 @@ function handle_database(req,type,callback) {
             var SQLquery;
             switch(type) {
                 case "login" :
-                    SQLquery = "SELECT * from user_login WHERE user_email='"+req.body.inputUsername1+"' AND user_password='"+req.body.inputPassword1+"'";
+                    SQLquery = "SELECT * from user_login WHERE user_name='"+req.body.inputUsername1+"' AND user_password='"+req.body.inputPassword1+"'";
                     break;
                 case "register" :
                     SQLquery = "INSERT into user_login(user_email,user_password,user_name) VALUES ('"+req.body.user_email+"','"+req.body.user_password+"','"+req.body.user_name+"')";
