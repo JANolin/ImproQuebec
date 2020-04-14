@@ -66,6 +66,7 @@ function handle_database(req,type,callback) {
                 }
             });
         }],
+
         //PERMET LE RETOUR APRES LE CALL ASYNC
         function(result){
             if(typeof(result) === "boolean" && result === true) {
