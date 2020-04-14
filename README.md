@@ -15,6 +15,6 @@ BdeB 2020
 2. VOUS DEVEZ VOUS __CREER__ UN USER DANS VOTRE DB MYSQL ET VOUS DONNER LES __PRIVILEGES__ POUR LE USER QUE VOUS AVEZ CREER!
 
   ```sql
-  CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
-  GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';
+  CREATE USER 'un_certain_nom_dutilisateur'@'localhost' IDENTIFIED BY 'un_certain_mot_de_passe';
+  GRANT ALL PRIVILEGES ON * . * TO 'un_certain_nom_dutilisateur'@'localhost';
   ```
