@@ -18,3 +18,21 @@ BdeB 2020
   CREATE USER 'un_certain_nom_dutilisateur'@'localhost' IDENTIFIED BY 'un_certain_mot_de_passe';
   GRANT ALL PRIVILEGES ON * . * TO 'un_certain_nom_dutilisateur'@'localhost';
   ```
+## MYSQL
+1. VOUS DEVEZ __DELETE__ L'ANCIENNE DB MYSQL CAR ELLE EST OBSELETE. __OUVREZ MYSQL DEPUIS LE MEME REPERTOIRE QUE ImproQuebec__
+  ```sql
+  DROP DATABASE improquebec;
+  ```
+2. VOUS DEVEZ __CREER__ UNE NOUVELLE DB MYSQL AVEC LE FICHIER file.sql.
+  ```sql
+  source ./file.sql;
+  ```
+3. VOUS DEVEZ "UTILISER" LA DB improquebec
+  ```sql
+  use improquebec;
+  ```
+4. VOUS DEVEZ VOUS __CREER__ UN COMPTE POUR LE SITE DIRECTEMENT DANS LA DB
+  ```sql
+  insert into user_login (user_email, user_password, user_name) values ('email@email.com','super_mot_de_passe','super_nom_dutilisateur');
+  ```
+5. VOUS DEVEZ VOUS CONNECTER AU SITE A L'AIDE DE VOTRE __NOM D'UTILISATEUR (super_nom_dutilisateur)__ ET NON PLUS VOTRE EMAIL!
