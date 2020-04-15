@@ -31,5 +31,4 @@ BdeB 2020
   ```sql
   use improquebec;
   ```
-  ```
 4. VOUS DEVEZ VOUS CONNECTER AU SITE A L'AIDE DE VOTRE __NOM D'UTILISATEUR (super_nom_dutilisateur)__ ET NON PLUS VOTRE EMAIL!
