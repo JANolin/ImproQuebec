@@ -69,6 +69,7 @@ app.use('/match', require('./routes/match/match'))
 app.use('/historique', require('./routes/historique/historique'))
 app.use('/fiche', require('./routes/fiche/fiche'))
 app.use('/register', require('./routes/register/register'))
+app.use('/logout', require('./routes/logout/logout'))
 
 app.post('/', (req, res) => {
     handler_db.handle_database_login(req, (response) => {

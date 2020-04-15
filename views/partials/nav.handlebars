@@ -1,28 +1,34 @@
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">IMPROQUEBEC</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarId" aria-controls="navbarId" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">ImproQuebec</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarId">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/match">Match<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/historique">Historique</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/horaire">Horaire</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/equipes">Equipes</a>
-            </li>
-        </ul>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        {{#if user_name}}
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/match">Match</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/historique">Historique</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/horaire">Horaire</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/equipes">Equipes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/equipes">Equipes</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <a class="btn btn-danger" href="/logout" role="button">Se déconnecter</a>
+            </form>
+        {{/if}}
     </div>
-    <span class="navbar-text">
-        {{email}}
-    </span>
 </nav>
