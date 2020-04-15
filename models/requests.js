@@ -8,7 +8,7 @@ const dotenv = require('dotenv').config();
 /**
  IMPORT POUR BRCYPT
 **/
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 //NOMBRE DE PASSE POUR SALT LES HASH
 const passageSalt = 10
 
