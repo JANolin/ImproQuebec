@@ -6,6 +6,13 @@ const express = require('express')
 const dotenv = require('dotenv').config();
 
 /**
+ IMPORT POUR BRCYPT
+**/
+const bcrypt = require('bcrypt');
+//NOMBRE DE PASSE POUR SALT LES HASH
+const passageSalt = 10
+
+/**
  IMPORT POUR MYSQL 
 **/
 const async = require('async')
@@ -25,7 +32,8 @@ const pool = mysql.createPool({
 /**
  FONCTION QUI GERE LES REQUETES ASYNC WATERFALL A LA DB MYSQL
 **/
-function handle_database(req,type,callback) {
+function handle_database_login(req,callback) {
+
     async.waterfall([
         function(callback) {
             pool.getConnection(function(err,connection){
@@ -37,43 +45,44 @@ function handle_database(req,type,callback) {
             });
         },
         function(connection,callback) {
-            var SQLquery;
-            switch(type) {
-                case "login" :
-                    SQLquery = "SELECT * from user_login WHERE user_name='"+req.body.inputUsername1+"' AND user_password='"+req.body.inputPassword1+"'";
-                    break;
-                case "register" :
-                    SQLquery = "INSERT into user_login(user_email,user_password,user_name) VALUES ('"+req.body.user_email+"','"+req.body.user_password+"','"+req.body.user_name+"')";
-                    break;
-                default :
-                    break;
-            }
+            var SQLquery = "SELECT * from user_login WHERE user_name='"+req.body.inputUsername1+"'";
             callback(null,connection,SQLquery);
         },
         function(connection,SQLquery,callback) {
             connection.query(SQLquery,function(err,rows){
                 connection.release()
                 if(!err) {
-                    if(type === "login") {
-                        if(rows == undefined || rows.length < 1)
-                        {
-                            callback(null)
-                        }else
-                        {
-                            callback(rows[0])
-                        }
-                    } else {
-                        callback(false)
+                    if(rows == undefined || rows.length < 1)
+                    {
+                        callback('erreur: pas de user avec ce nom', true)
+                    }else
+                    {
+                        callback(null,rows[0])
                     }
                 } else {
-                    callback(true)
+                    console.log(err)
+                    callback('grosse erreure',true)
                 }
             });
-        }],
+        },
+
+        function(result,callback) {
+            bcrypt.compare(req.body.inputPassword1, result.user_password, (err, isPasswordMatching) => {
+                if(isPasswordMatching)
+                {
+                    callback('Mot de passe valide', result)
+                }else
+                {
+                    callback('pas le bon mdp', true)
+                }
+            });
+        }
+    ],
 
         //PERMET LE RETOUR APRES LE CALL ASYNC
-        function(result){
+        function(err, result){
             if(typeof(result) === "boolean" && result === true) {
+                console.log(err)
                 callback(null)
             } else {
                 callback(result)
@@ -81,4 +90,50 @@ function handle_database(req,type,callback) {
         });
 }
 
-module.exports = {handle_database:handle_database}
+
+/**
+ FONCTION QUI GERE LES REQUETES DE REGISTER ASYNC WATERFALL A LA DB MYSQL
+**/
+function handle_database_register(req,SQLquery,callback) {
+    async.waterfall([
+        function(callback) {
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    callback('Erreur lors de la requete', true);
+                } else {
+                    callback(null,connection, SQLquery);
+                }
+            });
+        },
+        function(connection,SQLquery,callback) {
+            connection.query(SQLquery,function(err,rows){
+                connection.release()
+                if(!err) {
+                    callback('compte creer avec succes', false)
+                } else {
+                    if(err.errno == 1062)
+                    {
+                        callback('L\'utilisateur existe deja',true)
+                    }else
+                    {
+                        console.log(err)
+                        callback('grosse erreure',true)
+                    }
+                }
+            });
+        }
+    ],
+
+        //PERMET LE RETOUR APRES LE CALL ASYNC
+        function(err, result){
+            if(typeof(result) === "boolean" && result === true) {
+                console.log(err)
+                callback(true)
+            } else {
+                console.log(err)
+                callback(false)
+            }
+        });
+}
+
+module.exports = {handle_database_login:handle_database_login, handle_database_register:handle_database_register}
