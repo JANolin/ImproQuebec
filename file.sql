@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `improquebec`.`user_login` (
   `user_email` VARCHAR(50) NOT NULL COMMENT '',
   `user_password` VARCHAR(80) NOT NULL COMMENT '',
   `user_name` VARCHAR(50) NOT NULL COMMENT '',
+  `user_role` VARCHAR(50) NOT NULL COMMENT '',
   PRIMARY KEY (`user_id`)  COMMENT '',
   UNIQUE INDEX `user_name` (`user_name` ASC)  COMMENT '')
 ENGINE = InnoDB

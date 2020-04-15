@@ -5,7 +5,7 @@ const Model = require('../../models/models')
 router.get('/', (req, res) => {
     if(req.session.key)
     {
-        res.render('match', {email: req.session.key["user_email"], test: ['chien', 'chat', 'vache']})
+        res.render('match', {user_name: req.session.key["user_name"]})
 
         Model.Match.find(function (err, match) {
             if (err) return console.error(err);

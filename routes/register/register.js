@@ -24,7 +24,7 @@ router.post('/', (req, res) => {
 
     var SQLquery
     bcrypt.hash(req.body.inputPasswordRegister1, passageSalt, function(err, hash) {
-        SQLquery = "INSERT into user_login(user_email,user_password,user_name) VALUES ('"+req.body.inputEmailRegister1+"','"+hash+"','"+req.body.inputUsernameRegister1+"')";
+        SQLquery = "INSERT into user_login(user_email,user_password,user_name,user_role) VALUES ('"+req.body.inputEmailRegister1+"','"+hash+"','"+req.body.inputUsernameRegister1+"','user')";
 
         handler_db.handle_database_register(req, SQLquery, (response) => {
             if(response)
