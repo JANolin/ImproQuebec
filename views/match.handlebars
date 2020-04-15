@@ -1,343 +1,657 @@
-<form action="match" method="POST">
-<h1 class="text-center mb-5" style="margin-top: 80px;">Statistiques du match</h1>
-  <div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="inputEquipeHote1">✊ Equipe Hote</label>
-      <input type="text" class="form-control" name="inputEquipHote1" id="inputEquipeHote1" placeholder="Equipe Hote">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputEquipeVisiteuse1">✋ Equipe Visiteuse</label>
-      <input type="text" class="form-control" name="inputEquipVisiteuse1" id="inputEquipVisiteuse1" placeholder="Equipe Visiteuse">
-    </div>
-  </div>
+<style>
+  body {
+  background-image:  rgba(255,0,0,0);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover; 
   
-<div class="form-row mb-5">
-    <div class="form-group col-md-6">
-      <label for="inputCegepReceveur1">✊ CEGEP Receveur</label>
-      <input type="text" class="form-control" name="inputCegepReceveur1" id="inputCegepReceveur1" placeholder="CEGEP">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputCegepVisiteur1">✋ CEGEP Visiteur</label>
-      <input type="text" class="form-control" name="inputCegepVisiteur1" id="inputCegepReceveur1" placeholder="CEGEP">
-    </div>
-  </div>
+}
+ input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 3px solid black;
+}
+input[type=textCEGEP] {
+  width: 175%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 3px solid black;
+}
+input[type=textPOINT]{
+    width:30%;
+    padding:0px 0px;
+    margin: 4px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 3px solid black;
+}
+label.secondary {
+    font-size: 90%;
+}
+* {
+    font-family: Georgia, serif;
+    font-variant: small-caps;
+
+}
+</style>
+<body>
+    <form action="match" method="POST" >
+        <h1 class="text-center mb-5" style="margin-top: 80px;">Statistiques du match</h1>
+            <div class="form-row">
+                <div class="form-inline col-md-6">
+                    <label  for="inputEquipeHote1">✊ Équipe hôte : </label>
+                    <input type="text" class="form-control" name="inputEquipHote1" id="inputEquipeHote1" placeholder="Equipe Hote">
+                </div>
+                <div class="form-inline col-md-6">
+                    <label for="inputEquipeVisiteuse1">✋ Équipe Visiteuse : </label>
+                    <input type="text" class="form-control" name="inputEquipVisiteuse1" id="inputEquipVisiteuse1" placeholder="Équipe Visiteuse">
+                </div>
+            </div>
+            
+            <div class="form-row mb-5">
+                <div class="form-inline col-md-6">
+                    <label for="inputCegepReceveur1">✊ CÉGEP : </label>
+                    <input type="textCEGEP" class="form-control" name="inputCegepReceveur1" id="inputCegepReceveur1" placeholder="CEGEP">
+                </div>
+                <div class="form-inline col-md-6">
+                    <label for="inputCegepVisiteur1">✋ CÉGEP : </label>
+                    <input type="textCEGEP" class="form-control" name="inputCegepVisiteur1" id="inputCegepReceveur1" placeholder="CEGEP">
+                </div>
+            </div>
 
 
-  <div class="container">
-    <div class="form-row mb-5">
-          <div class="col-lg">
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <label for="inputNumeroJoueurReceveur1">Num</label>
-                      <input type="text" class="form-control" name="inputNumeroJoueurReceveur1" id="inputNumeroJoueurReceveur1" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <label for="inputNomJoueurReceveur1">Nom du joueur</label>
-                      <input type="text" class="form-control" name="inputNomJoueurReceveur1" id="inputNomJoueurReceveur1" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <label for="inputNombrePunitionsReceveur1">Punitions</label>
-                      <input type="text" class="form-control" name="inputNombrePunitionsReceveur1" id="inputNombrePunitionsReceveur1" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+            <div class="container">
+                <div class="form-row mb-5">
+                    <div class="col-lg">
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label for="inputNumeroJoueurReceveur1">Num.</label>
+                                <input type="text" class="form-control" name="inputNumeroJoueurReceveur1" id="inputNumeroJoueurReceveur1" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="inputNomJoueurReceveur1">Nom des interprètes</label>
+                                <input type="text" class="form-control" name="inputNomJoueurReceveur1" id="inputNomJoueurReceveur1" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="secondary" for="inputNombrePunitionsReceveur1">Pun.</label>
+                                <select class="form-control" name="inputNombrePunitionsReceveur1" id="inputNombrePunitionsReceveur1">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurReceveur2" id="inputNumeroJoueurReceveur2" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurReceveur2" id="inputNomJoueurReceveur2" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsReceveur2" id="inputNombrePunitionsReceveur2" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurReceveur2" id="inputNumeroJoueurReceveur2" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurReceveur2" id="inputNomJoueurReceveur2" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsReceveur2" id="inputNombrePunitionsReceveur2">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurReceveur3" id="inputNumeroJoueurReceveur3" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurReceveur3" id="inputNomJoueurReceveur3" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsReceveur3" id="inputNombrePunitionsReceveur3" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurReceveur3" id="inputNumeroJoueurReceveur3" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurReceveur3" id="inputNomJoueurReceveur3" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsReceveur3" id="inputNombrePunitionsReceveur3">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>     
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurReceveur4" id="inputNumeroJoueurReceveur4" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurReceveur4" id="inputNomJoueurReceveur4" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsReceveur4" id="inputNombrePunitionsReceveur4" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurReceveur4" id="inputNumeroJoueurReceveur4" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurReceveur4" id="inputNomJoueurReceveur4" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsReceveur4" id="inputNombrePunitionsReceveur4">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>        
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurReceveur5" id="inputNumeroJoueurReceveur5" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurReceveur5" id="inputNomJoueurReceveur5" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsReceveur5" id="inputNombrePunitionsReceveur5" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurReceveur5" id="inputNumeroJoueurReceveur5" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurReceveur5" id="inputNomJoueurReceveur5" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsReceveur5" id="inputNombrePunitionsReceveur5">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>            
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurReceveur6" id="inputNumeroJoueurReceveur6" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurReceveur6" id="inputNomJoueurReceveur6" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsReceveur6" id="inputNombrePunitionsReceveur6" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurReceveur6" id="inputNumeroJoueurReceveur6" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurReceveur6" id="inputNomJoueurReceveur6" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsReceveur6" id="inputNombrePunitionsReceveur6">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurReceveur7" id="inputNumeroJoueurReceveur7" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurReceveur7" id="inputNomJoueurReceveur7" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsReceveur7" id="inputNombrePunitionsReceveur7" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurReceveur7" id="inputNumeroJoueurReceveur7" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurReceveur7" id="inputNomJoueurReceveur7" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsReceveur7" id="inputNombrePunitionsReceveur7">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurReceveur8" id="inputNumeroJoueurReceveur8" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurReceveur8" id="inputNomJoueurReceveur8" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsReceveur8" id="inputNombrePunitionsReceveur8" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurReceveur8" id="inputNumeroJoueurReceveur8" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurReceveur8" id="inputNomJoueurReceveur8" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsReceveur8" id="inputNombrePunitionsReceveur8">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-8">
-                      <label for="inputEntraineurHote1">Entraineur</label>
-                      <input type="text" class="form-control" name="inputEntraineurHote1" id="inputEntraineurHote1" placeholder="Entraineur">
-                  </div>
-              </div>
-          </div>
-      </div>
-<!-- FIN PREMIERE COLONE POUR INFO JOUEURS -->
-</div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-inline col-md-8">
+                                <label for="inputEntraineurHote1">Ent.</label>
+                                <input type="text" class="form-control" name="inputEntraineurHote1" id="inputEntraineurHote1" placeholder="Entraineur">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- FIN PREMIERE COLONE POUR INFO JOUEURS -->
+            </div>
 
-<!-- DEUXIEME COLONE POUR LES JOUEURS -->
-          <div class="col-lg">
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <label for="inputNumeroJoueurVisiteur1">Num</label>
-                      <input type="text" class="form-control" name="inputNumeroJoueurVisiteur1" id="inputNumeroJoueurVisiteur1" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <label for="inputNomJoueurReceveur1">Nom du joueur</label>
-                      <input type="text" class="form-control" name="inputNomJoueurVisiteur1" id="inputNomJoueurVisiteur1" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <label for="inputNombrePunitionsReceveur1">Punitions</label>
-                      <input type="text" class="form-control" name="inputNombrePunitionsVisiteur1" id="inputNombrePunitionsVisiteur1" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+            <!-- DEUXIEME COLONE POUR LES JOUEURS -->
+                    <div class="col-lg">
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label for="inputNumeroJoueurVisiteur1">Num.</label>
+                                <input type="text" class="form-control" name="inputNumeroJoueurVisiteur1" id="inputNumeroJoueurVisiteur1" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="inputNomJoueurReceveur1">Nom des interprètes</label>
+                                <input type="text" class="form-control" name="inputNomJoueurVisiteur1" id="inputNomJoueurVisiteur1" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="secondary" for="inputNombrePunitionsVisiteur1">Pun.</label>
+                                <select class="form-control" name="inputNombrePunitionsVisiteur1" id="inputNombrePunitionsVisiteur1">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurVisiteur2" id="inputNumeroJoueurVisiteur2" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurVisiteur2" id="inputNomJoueurVisiteur2" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsVisiteur2" id="inputNombrePunitionsVisiteur2" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurVisiteur2" id="inputNumeroJoueurVisiteur2" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurVisiteur2" id="inputNomJoueurVisiteur2" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsVisiteur2" id="inputNombrePunitionsVisiteur2">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurVisiteur3" id="inputNumeroJoueurVisiteur3" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurVisiteur3" id="inputNomJoueurVisiteur3" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsVisiteur3" id="inputNombrePunitionsVisiteur3" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurVisiteur3" id="inputNumeroJoueurVisiteur3" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurVisiteur3" id="inputNomJoueurVisiteur3" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsVisiteur3" id="inputNombrePunitionsVisiteur3">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurVisiteur4" id="inputNumeroJoueurVisiteur4" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurVisiteur4" id="inputNomJoueurVisiteur4" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsVisiteur4" id="inputNombrePunitionsVisiteur4" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurVisiteur4" id="inputNumeroJoueurVisiteur4" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurVisiteur4" id="inputNomJoueurVisiteur4" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsVisiteur4" id="inputNombrePunitionsVisiteur4">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurVisiteur5" id="inputNumeroJoueurVisiteur5" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurVisiteur5" id="inputNomJoueurVisiteur5" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsVisiteur5" id="inputNombrePunitionsVisiteur5" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurVisiteur5" id="inputNumeroJoueurVisiteur5" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurVisiteur5" id="inputNomJoueurVisiteur5" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsVisiteur3" id="inputNombrePunitionsVisiteur3">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurVisiteur6" id="inputNumeroJoueurVisiteur6" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurVisiteur6" id="inputNomJoueurVisiteur6" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsVisiteur6" id="inputNombrePunitionsVisiteur6" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurVisiteur6" id="inputNumeroJoueurVisiteur6" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurVisiteur6" id="inputNomJoueurVisiteur6" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsVisiteur6" id="inputNombrePunitionsVisiteur6">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurVisiteur7" id="inputNumeroJoueurVisiteur7" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurVisiteur7" id="inputNomJoueurVisiteur7" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsVisiteur7" id="inputNombrePunitionsVisiteur7" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurVisiteur7" id="inputNumeroJoueurVisiteur7" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurVisiteur7" id="inputNomJoueurVisiteur7" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsVisiteur7" id="inputNombrePunitionsVisiteur7">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNumeroJoueurVisiteur8" id="inputNumeroJoueurVisiteur8" placeholder="#">
-                  </div>
-                  <div class="form-group col-md-6">
-                      <input type="text" class="form-control" name="inputNomJoueurVisiteur8" id="inputNomJoueurVisiteur8" placeholder="Nom">
-                  </div>
-                  <div class="form-group col-md-1">
-                      <input type="text" class="form-control" name="inputNombrePunitionsVisiteur8" id="inputNombrePunitionsVisiteur8" placeholder="#">
-                  </div>
-              </div>
-          </div>
-      </div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <input type="text" class="form-control" name="inputNumeroJoueurVisiteur8" id="inputNumeroJoueurVisiteur8" placeholder="#">
+                            </div>
+                            <div class="form-group col-md-5">
+                                <input type="text" class="form-control" name="inputNomJoueurVisiteur8" id="inputNomJoueurVisiteur8" placeholder="Nom">
+                            </div>
+                            <div class="form-group col-md-1">
+                                <select class="form-control" name="inputNombrePunitionsVisiteur8" id="inputNombrePunitionsVisiteur8">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      <div class="row">
-          <div class="col-lg">
-              <div class="form-row">
-                  <div class="form-group col-md-8">
-                      <label for="inputEntraineurVisiteur1">Entraineur</label>
-                      <input type="text" class="form-control" name= "inputEntraineurVisiteur1" id="inputEntraineurVisiteur1" placeholder="Entraineur">
-                  </div>
-              </div>
-          </div>
-      </div>
-<!-- FIN DE LA DEUXIEME COLONE POUR LES JOUEURS -->
-</div>
+                <div class="row">
+                    <div class="col-lg">
+                        <div class="form-row">
+                            <div class="form-inline col-md-8">
+                                <label for="inputEntraineurVisiteur1">Ent.</label>
+                                <input type="text" class="form-control" name= "inputEntraineurVisiteur1" id="inputEntraineurVisiteur1" placeholder="Entraineur">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- FIN DE LA DEUXIEME COLONE POUR LES JOUEURS -->
+            </div>
 
-</div>
-<!-- FIN DES 2 COLONES 7 RANGEES POUR INFO DE JOUEURS -->
-  </div>
+            </div>
+            <!-- FIN DES 2 COLONES 7 RANGEES POUR INFO DE JOUEURS -->
+            </div>
 
-<h1 class="text-center mb-5"> <u>Resultats Finaux</u> </h1>
 
-          <div class="col-12 mb-5">
-              <div class="form-row">
-                  <div class="form-group col-sm">
-                      <input type="text" class="form-control" name="inputPointageEquipeHote1" id="inputPointageEquipeHote1" placeholder="#">
-                  </div>
-                    <h1 class="text-center">A</h1>
-                  <div class="form-group col-sm">
-                      <input type="text" class="form-control" name="inputPointageEquipeVisiteuse1" id="inputPointageEquipeVisiteuse1" placeholder="#">
-                  </div>
-              </div>
-          </div>
+            <!--div class="form-group">
 
-<h3 class="text-center mb-2">EN FAVEUR DE</h3>
+                <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Pénalités d'équipe</th>
+                        <th>Pénalités indiv.</th>
+                        <th>Point</th>
+                        <th>Score H</th>
+                        <th>Score V</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td><input type="textPOINT" class="form-control" name="inputPointHote1" id="inputPointHote1" placeholder="#">
+                        </td>
+                        <td>
+                            <select class="form-control" name="inputPoint1" id="inputPoint1">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td><input type="textPOINT" class="form-control" name="inputPointHote2" id="inputPointHote2" placeholder="#">
+                        </td>
+                        <td>
+                            <select class="form-control" name="inputPoint2" id="inputPoint2">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td><input type="textPOINT" class="form-control" name="inputPointHote3" id="inputPointHote3" placeholder="#">
+                        </td>
+                        <td>
+                            <select class="form-control" name="inputPoint3" id="inputPoint3">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td><input type="textPOINT" class="form-control" name="inputPointHote4" id="inputPointHote4" placeholder="#">
+                        </td>
+                        <td>
+                            <select class="form-control" name="inputPoint4" id="inputPoint4">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td><input type="textPOINT" class="form-control" name="inputPointHote5" id="inputPointHote5" placeholder="#">
+                        </td>
+                        <td>
+                            <select class="form-control" name="inputPoint5" id="inputPoint5">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td><input type="textPOINT" class="form-control" name="inputPointHote6" id="inputPointHote6" placeholder="#">
+                        </td>
+                        <td>
+                            <select class="form-control" name="inputPoint1" id="inputPoint1">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <!--tr>
+                        <td>7</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>
+                            <select class="form-control" name="inputPoint1" id="inputPoint1">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>
+                            <select class="form-control" name="inputPoint1" id="inputPoint1">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>
+                            <select class="form-control" name="inputPoint1" id="inputPoint1">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>
+                            <select class="form-control" name="inputPoint1" id="inputPoint1">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>
+                            <select class="form-control" name="inputPoint1" id="inputPoint1">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Doe</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>john@example.com</td>
+                        <td>
+                            <select class="form-control" name="inputPoint1" id="inputPoint1">
+                                    <option>/</option>
+                                    <option>H</option>
+                                    <option>V</option>
+                            </select>  
+                        </td>
+                    </tr-->
+            
+            <h1 class="text-center mb-5"> <u>Resultats Finaux</u> </h1>
 
-  <div class="form-group">
-    <input type="text" class="form-control" name="inputEquipeGagnante1" id="inputEquipeGagnante1" placeholder="">
-  </div>
-  <button type="submit" class="btn btn-success mb-5">Envoyer</button>
-</form>
+                    <div class="col-12 mb-5">
+                        <div class="form-row">
+                            <div class="form-group col-sm">
+                                <input type="text" class="form-control" name="inputPointageEquipeHote1" id="inputPointageEquipeHote1" placeholder="#">
+                            </div>
+                                <h1 class="text-center">A</h1>
+                            <div class="form-group col-sm">
+                                <input type="text" class="form-control" name="inputPointageEquipeVisiteuse1" id="inputPointageEquipeVisiteuse1" placeholder="#">
+                            </div>
+                        </div>
+                    </div>
+
+            <h3 class="text-center mb-2">EN FAVEUR DE</h3>
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="inputEquipeGagnante1" id="inputEquipeGagnante1" placeholder="">
+            </div>
+            
+            <button type="submit" class="btn btn-success mb-5">Envoyer</button>
+    </form>
+</body>
