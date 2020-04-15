@@ -31,8 +31,5 @@ BdeB 2020
   ```sql
   use improquebec;
   ```
-4. VOUS DEVEZ VOUS __CREER__ UN COMPTE POUR LE SITE DIRECTEMENT DANS LA DB
-  ```sql
-  insert into user_login (user_email, user_password, user_name) values ('email@email.com','super_mot_de_passe','super_nom_dutilisateur');
   ```
-5. VOUS DEVEZ VOUS CONNECTER AU SITE A L'AIDE DE VOTRE __NOM D'UTILISATEUR (super_nom_dutilisateur)__ ET NON PLUS VOTRE EMAIL!
+4. VOUS DEVEZ VOUS CONNECTER AU SITE A L'AIDE DE VOTRE __NOM D'UTILISATEUR (super_nom_dutilisateur)__ ET NON PLUS VOTRE EMAIL!
