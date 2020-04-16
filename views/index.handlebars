@@ -1,3 +1,8 @@
+{{#if  success.user_creation_success}}
+<div class="alert alert-success" role="alert">
+    Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter
+</div>
+{{/if}}
 <form action="/" method="POST">
     <div class="form-group">
         <label for="inputUsername1" class="mt-5">Nom d'utilisateur</label>
@@ -9,4 +14,9 @@
     </div>
     <button type="submit" class="btn btn-primary mr-3">Se connecter</button>
     <a href="/register">Nouveau sur le site? S'inscrire</a>
+    {{#if  error.invalid_creds}}
+    <div class="alert alert-danger mt-5" role="alert">
+        Nom d'utilisateur ou mot de passe invalide
+    </div>
+    {{/if}}
 </form>
