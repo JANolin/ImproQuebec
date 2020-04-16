@@ -72,7 +72,7 @@ router.get('/', (req, res) => { if(req.session.key) {
 
         }
 
-        res.render('historique', {email: req.session.key["user_email"], test: all_history })
+        res.render('historique', {user_name: req.session.key["user_name"], test: all_history })
     })
 }else
 {
