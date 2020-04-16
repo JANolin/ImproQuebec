@@ -1,6 +1,11 @@
+{{#if  error.invalid_user_already_exist}}
+<div class="alert alert-danger mt-5" role="alert">
+    Cet nom d'utilisateur n'est pas disponible
+</div>
+{{/if}}
 <form action="/register" method="POST">
     <div class="form-group">
-        <label for="inputUsernameRegister1" class="mt-5">Nom d'utilisateur</label>
+        <label for="inputUsernameRegister1" class="mt-1">Nom d'utilisateur</label>
         <input type="text" class="form-control" name="inputUsernameRegister1" id="inputUsernameRegister1" placeholder="Nom d'utilisateur" required>
     </div>
     <div class="form-group">
@@ -12,9 +17,4 @@
         <input type="password" class="form-control" name="inputPasswordRegister1" id="inputPasswordRegister1" placeholder="Mot de passe" required>
     </div>
     <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
-    {{#if  error.invalid_user_already_exist}}
-    <div class="alert alert-danger mt-5" role="alert">
-        Cet nom d'utilisateur n'est pas disponible
-    </div>
-    {{/if}}
 </form>
