@@ -72,7 +72,7 @@ router.get('/', (req, res) => { if(req.session.key) {
         current_match.inputEquipeGagnante1= match[0].inputEquipeGagnante1
         
         current_match_arr.push(current_match)
-        res.render('fiche', {email: req.session.key["user_email"], test: current_match_arr })
+        res.render('fiche', {user_name: req.session.key["user_name"], test: current_match_arr })
     })
 }
 else
