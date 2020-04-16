@@ -13,7 +13,7 @@ const passageSalt = 10
 router.get('/', (req, res) => {
     if(req.session.key)
     {
-        res.redirect('/match')
+        res.redirect('/accueil')
     }else
     {
         res.render('register')
