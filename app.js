@@ -53,7 +53,7 @@ app.use(express.urlencoded({ extended: false }))
 app.get('/', (req, res) => {
     if(req.session.key)
     {
-        res.redirect('/match')
+        res.redirect('/accueil')
     }else
     {
         res.render('index')
@@ -70,6 +70,7 @@ app.use('/historique', require('./routes/historique/historique'))
 app.use('/fiche', require('./routes/fiche/fiche'))
 app.use('/register', require('./routes/register/register'))
 app.use('/logout', require('./routes/logout/logout'))
+app.use('/accueil', require('./routes/accueil/accueil'))
 
 app.post('/', (req, res) => {
     handler_db.handle_database_login(req, (response) => {
@@ -85,7 +86,7 @@ app.post('/', (req, res) => {
             //SI SON COMPTE EXISTE
             } else {
                 req.session.key = response;
-                res.redirect('/match')
+                res.redirect('/accueil')
             }
         }
     });
