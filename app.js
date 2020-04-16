@@ -76,14 +76,16 @@ app.post('/', (req, res) => {
     handler_db.handle_database_login(req, (response) => {
         //SI LA REQUETE A PLANTE/ LE COMPTE EXISTE PAS
         if(response === null) {
-                res.redirect('/')
+            //res.redirect('/')
+            res.render('index', {error :{invalid_creds : true} })
 
         } else {
             //SI SON COMPTE EXISTE PAS
             if(!response) {
-                res.redirect('/')
+                //res.redirect('/')
+                res.render('index', {error :{invalid_creds : true} })
 
-            //SI SON COMPTE EXISTE
+                //SI SON COMPTE EXISTE
             } else {
                 req.session.key = response;
                 res.redirect('/accueil')

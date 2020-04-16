@@ -12,4 +12,9 @@
         <input type="password" class="form-control" name="inputPasswordRegister1" id="inputPasswordRegister1" placeholder="Mot de passe" required>
     </div>
     <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
+    {{#if  error.invalid_user_already_exist}}
+    <div class="alert alert-danger mt-5" role="alert">
+        Cet nom d'utilisateur n'est pas disponible
+    </div>
+    {{/if}}
 </form>
