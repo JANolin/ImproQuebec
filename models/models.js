@@ -69,13 +69,22 @@ const User = db.model("User", {
 const Equipe = db.model("Equipe", {
                                     nomEquipe: String,
                                     nomJoueur1: String,
+                                    numeroJoueur1: Number,
                                     nomJoueur2: String,
+                                    numeroJoueur2: Number,
                                     nomJoueur3: String,
+                                    numeroJoueur3: Number,
                                     nomJoueur4: String,
+                                    numeroJoueur4: Number,
                                     nomJoueur5: String,
+                                    numeroJoueur5: Number,
                                     nomJoueur6: String,
+                                    numeroJoueur6: Number,
                                     nomJoueur7: String,
+                                    numeroJoueur7: Number,
                                     nomJoueur8: String,
+                                    numeroJoueur8: Number,
+                                    nomEntraineur: String,
 })
 
 module.exports.Match = Match
