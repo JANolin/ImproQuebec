@@ -66,5 +66,18 @@ const User = db.model("User", {
                                     password: String
 })
 
+const Equipe = db.model("Equipe", {
+                                    nomEquipe: String,
+                                    nomJoueur1: String,
+                                    nomJoueur2: String,
+                                    nomJoueur3: String,
+                                    nomJoueur4: String,
+                                    nomJoueur5: String,
+                                    nomJoueur6: String,
+                                    nomJoueur7: String,
+                                    nomJoueur8: String,
+})
+
 module.exports.Match = Match
 module.exports.User = User
+module.exports.Equipe = Equipe

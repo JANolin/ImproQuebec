@@ -68,6 +68,8 @@ app.use('/api/members', require('./routes/api/members'))
 app.use('/match', require('./routes/match/match'))
 app.use('/historique', require('./routes/historique/historique'))
 app.use('/fiche', require('./routes/fiche/fiche'))
+app.use('/equipes', require('./routes/equipes/equipes'))
+app.use('/equipe', require('./routes/equipe/equipe'))
 app.use('/register', require('./routes/register/register'))
 app.use('/logout', require('./routes/logout/logout'))
 

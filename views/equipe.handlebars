@@ -1,0 +1,17 @@
+<br>
+<div>
+    <ul>
+        {{#each meta}}
+            {{#each this}}
+            <li>
+                {{#unless @first}}
+                    {{this}}
+                {{/unless}}
+                {{#if @first}}
+                    <b>{{this}}</b>
+                {{/if}}
+            </li>
+            {{/each}}
+        {{/each}}
+    </ul>
+</div>
