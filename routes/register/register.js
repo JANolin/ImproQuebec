@@ -13,7 +13,7 @@ const passageSalt = 10
 router.get('/', (req, res) => {
     if(req.session.key)
     {
-        res.redirect('/match')
+        res.redirect('/accueil')
     }else
     {
         res.render('register')
@@ -32,11 +32,11 @@ router.post('/', (req, res) => {
                 //SI LE COMPTE EXISTE DEJA
                 //MEME REDIRECTION MAIS DANS LE FUTURE IL FAUT FAIRE DES MESSAGES
                 //POUR LES UTILISATEURS (MESSAGES DERREURS)
-                res.redirect('/')
+                res.render('register', {error :{invalid_user_already_exist : true} })
             }else
             {
                 //CREATION DE COMPTE AVEC SUCCES
-                res.redirect('/')
+                res.render('index', {success :{user_creation_success : true} })
             }
 
         });

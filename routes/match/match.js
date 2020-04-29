@@ -1,16 +1,22 @@
 const express = require('express')
 const router = express.Router()
 const Model = require('../../models/models')
+const utils = require('../../utils/utils')
 
 router.get('/', (req, res) => {
     if(req.session.key)
     {
-        res.render('match', {user_name: req.session.key["user_name"]})
+        if(utils.checkRoleUser(req, 'equipe'))
+        {
+            res.render('match', {user_context: true, user_role: utils.getUserRoles(req)})
 
-        Model.Match.find(function (err, match) {
-            if (err) return console.error(err);
-            //console.log(match);
-        })
+            Model.Match.find(function (err, match) {
+                if (err) return console.error(err);
+            })
+        }else
+        {
+            res.redirect('/')
+        }
 
     }else
     {

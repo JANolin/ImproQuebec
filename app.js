@@ -53,7 +53,7 @@ app.use(express.urlencoded({ extended: false }))
 app.get('/', (req, res) => {
     if(req.session.key)
     {
-        res.redirect('/match')
+        res.redirect('/accueil')
     }else
     {
         res.render('index')
@@ -72,22 +72,25 @@ app.use('/equipes', require('./routes/equipes/equipes'))
 app.use('/equipe', require('./routes/equipe/equipe'))
 app.use('/register', require('./routes/register/register'))
 app.use('/logout', require('./routes/logout/logout'))
+app.use('/accueil', require('./routes/accueil/accueil'))
 
 app.post('/', (req, res) => {
     handler_db.handle_database_login(req, (response) => {
         //SI LA REQUETE A PLANTE/ LE COMPTE EXISTE PAS
         if(response === null) {
-                res.redirect('/')
+            //res.redirect('/')
+            res.render('index', {error :{invalid_creds : true} })
 
         } else {
             //SI SON COMPTE EXISTE PAS
             if(!response) {
-                res.redirect('/')
+                //res.redirect('/')
+                res.render('index', {error :{invalid_creds : true} })
 
-            //SI SON COMPTE EXISTE
+                //SI SON COMPTE EXISTE
             } else {
                 req.session.key = response;
-                res.redirect('/match')
+                res.redirect('/accueil')
             }
         }
     });

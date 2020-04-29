@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Model = require('../../models/models')
+const utils = require('../../utils/utils')
 
 router.get('/', (req, res) => { if(req.session.key) {
     Model.Match.find(function (err, match) {
@@ -72,7 +73,7 @@ router.get('/', (req, res) => { if(req.session.key) {
 
         }
 
-        res.render('historique', {user_name: req.session.key["user_name"], test: all_history })
+        res.render('historique', {user_context: true, user_role : utils.getUserRoles(req) ,  test: all_history })
     })
 }else
 {
