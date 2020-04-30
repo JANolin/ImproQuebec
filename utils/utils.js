@@ -1,5 +1,6 @@
 const express = require('express')
 const handler_db = require('../models/requests')
+const colors = require('colors')
 
 const ALL_PERMS = {
     access : 1,
@@ -67,12 +68,14 @@ function checkIfUserAllowed(perm, rsc, req)
                 {
                     if(response[i].permission_id == ALL_PERMS[perm])
                     {
+                        console.log('✔️ Action : '.green + perm + ' : effectuee avec success pour la ressource : '.green + rsc)
                         resolve('a les perms')
                         return
                     }
                 }
 
             }
+            console.log('❌ Action : '.red + perm + ' refusee pour la ressource : '.red + rsc)
             reject('na pas les perms')
             return
         });
@@ -87,7 +90,7 @@ async function goIfUserAllowed(perm, req, res, go, back) {
     {
         rsc = "enter" 
     }
-    console.log("Tentative avec perm pour : " + rsc)
+    console.log("Tentative d'acces a : ".magenta + rsc +" avec perms ...".magenta)
     checkIfUserAllowed(perm, rsc, req).then((msg)=>go(rsc), (err)=>back(err))
 }
 

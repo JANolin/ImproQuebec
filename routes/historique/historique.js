@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
         },
         //back
         (err)=> {
-            console.log('Pas les perms car : ' + err)
             res.redirect('/')
         })
 })
@@ -87,7 +86,6 @@ function getHistorique()
                 all_history.push(current_match)
 
             }
-            console.log('chat?')
             return all_history
         })
 }

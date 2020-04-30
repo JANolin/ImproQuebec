@@ -107,15 +107,15 @@ function handle_database_register(req,SQLquery,callback) {
             connection.query(SQLquery,function(err,rows){
                 connection.release()
                 if(!err) {
-                    callback('compte creer avec succes', false)
+                    callback('Compte creer avec succes'.green, false)
                 } else {
                     if(err.errno == 1062)
                     {
-                        callback('L\'utilisateur existe deja',true)
+                        callback('Erreur pour creer le compte : L\'utilisateur existe deja'.red,true)
                     }else
                     {
                         console.log(err)
-                        callback('grosse erreure',true)
+                        callback('Grosse erreure'.bgRed,true)
                     }
                 }
             });
@@ -144,8 +144,6 @@ function handle_database_check_perms(req, rsc, callback) {
         user_role = req.session.key.user_role
     }
 
-    console.log('requete avec role: ' + user_role)
-
     async.waterfall([
         function(callback) {
             pool.getConnection(function(err,connection){
@@ -166,15 +164,13 @@ function handle_database_check_perms(req, rsc, callback) {
                 if(!err) {
                     if(rows == undefined || rows.length < 1)
                     {
-                        console.log(rows)
-                        callback('erreur: pas de perms trouvees pour ces params', true)
+                        callback('Acces refuse pour la ressource :'.red + rsc+' par un : '.red + user_role+''.red, true)
                     }else
                     {
                         callback(null,rows)
                     }
                 } else {
-                    console.log(err)
-                    callback('grosse erreure avec la db pour les perms',true)
+                    callback('GROSSE ERREURE AVEC LA DB POUR LES PERMS'.bgRed,true)
                 }
             });
         }
@@ -183,10 +179,8 @@ function handle_database_check_perms(req, rsc, callback) {
         //PERMET LE RETOUR APRES LE CALL ASYNC
         function(err, result){
             if(typeof(result) === "boolean" && result === true) {
-                console.log(err)
                 callback(null)
             } else {
-                console.log('xxxxxx')
                 callback(result)
             }
         });

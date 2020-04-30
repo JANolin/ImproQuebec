@@ -18,7 +18,6 @@ router.get('/', (req, res) => {
         (err)=> {
             //TODO Redirect vers une page erreur 403
             //faire ca partout quand la promise fail
-            console.log('na pas acces a la resource car: ' + err)
             res.redirect('/')
         })
 })

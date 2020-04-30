@@ -19,7 +19,6 @@ router.get('/', (req, res) => {
         },
         //back
         (err)=>{
-            console.log('Pas les perms car : ' + err)
             res.redirect('/')
         })
 })

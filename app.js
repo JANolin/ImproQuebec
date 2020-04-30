@@ -59,8 +59,7 @@ app.get('/', (req, res) => {
         },
         //back
         (err)=>{
-            console.log('na pas acces a la resource car: ' + err)
-            //loop infini mais ne devrai pas arrive
+            //loop infini mais ne devrai pas arrive... normalement.
             res.redirect('/')
         })
 })

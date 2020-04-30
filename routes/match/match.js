@@ -14,7 +14,6 @@ router.get('/', (req, res) => {
         },
             //back
         (err)=> {
-            console.log('na pas acces a la resource car: ' + err)
             res.redirect('/')
         })
 })
@@ -82,7 +81,6 @@ router.post('/', (req, res) => {
 
     matchReport.save().then(() => console.log("DB: $MATCH$ INFOS SAVED"))
 
-    //console.log(req.body)
     res.redirect('/match')
 })
 

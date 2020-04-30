@@ -93,6 +93,14 @@ INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(3,7,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(3,8,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(3,9,1);
 
+-- COACH --
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,1,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,5,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,6,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,7,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,8,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,9,1);
+
 -- -----------------------------------------------------
 -- Table `improquebec`.`user_login`
 -- -----------------------------------------------------

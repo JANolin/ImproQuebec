@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
         },
         //back
         (err)=>{
-            console.log('na pas acces a la resource car: ' + err)
             res.redirect('/')
         })
 })
