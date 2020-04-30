@@ -2,30 +2,21 @@ const express = require('express')
 const router = express.Router()
 const Model = require('../../models/models')
 const utils = require('../../utils/utils')
+const async = require('async')
+const handler_db = require('../../models/requests')
 
 router.get('/', (req, res) => {
-    if(req.session.key)
-    {
-        if(utils.checkRoleUser(req, 'equipe'))
-        {
-            res.render('match', {user_context: true, user_role: utils.getUserRoles(req)})
 
-            Model.Match.find(function (err, match) {
-                if (err) return console.error(err);
-            })
-        }else
-        {
+        utils.goIfUserAllowed('access', req, res, 
+            //go
+        (rsc)=> {
+            utils.renderWithPerms(req, res, rsc)
+        },
+            //back
+        (err)=> {
+            console.log('na pas acces a la resource car: ' + err)
             res.redirect('/')
-        }
-
-    }else
-    {
-        res.redirect('/')
-    }
-})
-
-router.get('/:id', (req, res) => {
-    console.log(req.params.id)
+        })
 })
 
 router.post('/', (req, res) => {

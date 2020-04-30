@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Model = require('../../models/models')
 const handler_db = require('../../models/requests')
+const utils = require('../../utils/utils')
 
 /**
  IMPORT POUR BRCYPT
@@ -11,20 +12,23 @@ const bcrypt = require('bcryptjs');
 const passageSalt = 10
 
 router.get('/', (req, res) => {
-    if(req.session.key)
-    {
-        res.redirect('/accueil')
-    }else
-    {
-        res.render('register')
-    }
+    utils.goIfUserAllowed("access", req, res,
+        //go
+        (rsc)=>{
+            utils.renderWithPerms(req, res, rsc)
+        },
+        //back
+        (err)=>{
+            console.log('Pas les perms car : ' + err)
+            res.redirect('/')
+        })
 })
 
 router.post('/', (req, res) => {
 
     var SQLquery
     bcrypt.hash(req.body.inputPasswordRegister1, passageSalt, function(err, hash) {
-        SQLquery = "INSERT into user_login(user_email,user_password,user_name,user_role) VALUES ('"+req.body.inputEmailRegister1+"','"+hash+"','"+req.body.inputUsernameRegister1+"','user')";
+        SQLquery = "INSERT into user_login(user_email,user_password,user_name,user_role) VALUES ('"+req.body.inputEmailRegister1+"','"+hash+"','"+req.body.inputUsernameRegister1+"',2)";
 
         handler_db.handle_database_register(req, SQLquery, (response) => {
             if(response)
@@ -32,11 +36,13 @@ router.post('/', (req, res) => {
                 //SI LE COMPTE EXISTE DEJA
                 //MEME REDIRECTION MAIS DANS LE FUTURE IL FAUT FAIRE DES MESSAGES
                 //POUR LES UTILISATEURS (MESSAGES DERREURS)
-                res.render('register', {error :{invalid_user_already_exist : true} })
+                //res.render('register', {error :{invalid_user_already_exist : true} })
+                utils.renderWithPerms(req, res, 'register', {invalid_user_already_exist : true})
             }else
             {
                 //CREATION DE COMPTE AVEC SUCCES
-                res.render('index', {success :{user_creation_success : true} })
+                //res.render('login', {success :{user_creation_success : true} })
+                utils.renderWithPerms(req, res, 'login', {user_creation_success : true})
             }
 
         });
