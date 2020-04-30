@@ -31,6 +31,7 @@ const pool = mysql.createPool({
  FONCTION QUI GERE LES REQUETES ASYNC WATERFALL A LA DB MYSQL
 **/
 function handle_database_login(req,callback) {
+    console.log("Tentative de connexion par : ".cyan + req.body.inputUsername1 + " ...".cyan)
 
     async.waterfall([
         function(callback) {
@@ -52,14 +53,13 @@ function handle_database_login(req,callback) {
                 if(!err) {
                     if(rows == undefined || rows.length < 1)
                     {
-                        callback('erreur: pas de user avec ce nom', true)
+                        callback('Connection impossible : Pas de user avec le nom : '.red + req.body.inputUsername1, true)
                     }else
                     {
                         callback(null,rows[0])
                     }
                 } else {
-                    console.log(err)
-                    callback('grosse erreure',true)
+                    callback('Grosse erreure lors de la connexion'.bgRed,true)
                 }
             });
         },
@@ -68,10 +68,10 @@ function handle_database_login(req,callback) {
             bcrypt.compare(req.body.inputPassword1, result.user_password, (err, isPasswordMatching) => {
                 if(isPasswordMatching)
                 {
-                    callback('Mot de passe valide', result)
+                    callback('Connexion reussie : Mot de passe valide pour : '.green + req.body.inputUsername1, result)
                 }else
                 {
-                    callback('pas le bon mdp', true)
+                    callback('Connecion impossible : Pas le bon mot de passe pour : '.red + req.body.inputUsername1, true)
                 }
             });
         }
@@ -79,8 +79,8 @@ function handle_database_login(req,callback) {
 
         //PERMET LE RETOUR APRES LE CALL ASYNC
         function(err, result){
+            console.log(err)
             if(typeof(result) === "boolean" && result === true) {
-                console.log(err)
                 callback(null)
             } else {
                 callback(result)
@@ -93,11 +93,12 @@ function handle_database_login(req,callback) {
  FONCTION QUI GERE LES REQUETES DE REGISTER ASYNC WATERFALL A LA DB MYSQL
 **/
 function handle_database_register(req,SQLquery,callback) {
+    console.log("Tentative de d'inscription par : ".cyan + req.body.inputUsernameRegister1 + " ...".cyan)
     async.waterfall([
         function(callback) {
             pool.getConnection(function(err,connection){
                 if (err) {
-                    callback('Erreur lors de la requete', true);
+                    callback('Erreur lors de la requete'.bgRed, true);
                 } else {
                     callback(null,connection, SQLquery);
                 }
@@ -107,15 +108,14 @@ function handle_database_register(req,SQLquery,callback) {
             connection.query(SQLquery,function(err,rows){
                 connection.release()
                 if(!err) {
-                    callback('Compte creer avec succes'.green, false)
+                    callback('Insciption reussie : Compte creer avec succes'.green, false)
                 } else {
                     if(err.errno == 1062)
                     {
-                        callback('Erreur pour creer le compte : L\'utilisateur existe deja'.red,true)
+                        callback('Insciption impossible : L\'utilisateur : '.red + req.body.inputUsernameRegister1 +' existe deja'.red,true)
                     }else
                     {
-                        console.log(err)
-                        callback('Grosse erreure'.bgRed,true)
+                        callback('Grosse erreure lors de l\'inscription'.bgRed,true)
                     }
                 }
             });
@@ -164,7 +164,7 @@ function handle_database_check_perms(req, rsc, callback) {
                 if(!err) {
                     if(rows == undefined || rows.length < 1)
                     {
-                        callback('Acces refuse pour la ressource :'.red + rsc+' par un : '.red + user_role+''.red, true)
+                        callback('Acces refuse pour la ressource : '.red + rsc+' par un : '.red + user_role+''.red, true)
                     }else
                     {
                         callback(null,rows)
