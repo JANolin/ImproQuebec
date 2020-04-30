@@ -4,9 +4,7 @@ const express = require('express')
  IMPORT POUR DOTENV 
 **/
 const dotenv = require('dotenv').config();
-
-/**
- IMPORT POUR BRCYPT
+/** IMPORT POUR BRCYPT
 **/
 const bcrypt = require('bcryptjs');
 //NOMBRE DE PASSE POUR SALT LES HASH
@@ -136,4 +134,62 @@ function handle_database_register(req,SQLquery,callback) {
         });
 }
 
-module.exports = {handle_database_login:handle_database_login, handle_database_register:handle_database_register}
+function handle_database_check_perms(req, rsc, callback) {
+    let user_role
+    if(req.session.key === undefined)
+    {
+        user_role = 5
+    }else
+    {
+        user_role = req.session.key.user_role
+    }
+
+    console.log('requete avec role: ' + user_role)
+
+    async.waterfall([
+        function(callback) {
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    callback(true);
+                } else {
+                    callback(null,connection);
+                }
+            });
+        },
+        function(connection,callback) {
+            var SQLquery = "SELECT * from permissions_god WHERE role_id = '"+user_role+"' AND resource_id = '"+rsc+"'";
+            callback(null,connection,SQLquery);
+        },
+        function(connection,SQLquery,callback) {
+            connection.query(SQLquery,function(err,rows){
+                connection.release()
+                if(!err) {
+                    if(rows == undefined || rows.length < 1)
+                    {
+                        console.log(rows)
+                        callback('erreur: pas de perms trouvees pour ces params', true)
+                    }else
+                    {
+                        callback(null,rows)
+                    }
+                } else {
+                    console.log(err)
+                    callback('grosse erreure avec la db pour les perms',true)
+                }
+            });
+        }
+    ],
+
+        //PERMET LE RETOUR APRES LE CALL ASYNC
+        function(err, result){
+            if(typeof(result) === "boolean" && result === true) {
+                console.log(err)
+                callback(null)
+            } else {
+                console.log('xxxxxx')
+                callback(result)
+            }
+        });
+}
+
+module.exports = {handle_database_login:handle_database_login, handle_database_register:handle_database_register, handle_database_check_perms:handle_database_check_perms}

@@ -3,13 +3,16 @@ const router = express.Router()
 const utils = require('../../utils/utils')
 
 router.get('/', (req, res) => {
-    if(req.session.key)
-    {
-        res.render('accueil', {user_context: true, user_role : utils.getUserRoles(req)})
-    }else
-    {
-        res.redirect('/')
-    }
+    utils.goIfUserAllowed("access", req, res,
+            //go
+        (rsc)=>{
+            utils.renderWithPerms(req, res, rsc)
+        },
+            //back
+        (err)=>{
+            console.log('Pas les perms car : ' + err)
+            res.redirect('/')
+        })
 })
 
 module.exports = router

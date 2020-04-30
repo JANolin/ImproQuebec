@@ -4,6 +4,7 @@ const logger = require('./middlewares/logger')
 const exphbs = require('express-handlebars')
 const Models = require('./models/models')
 const handler_db = require('./models/requests')
+const utils = require('./utils/utils')
 
 const app = express()
 const port = 3000
@@ -51,13 +52,17 @@ app.use(express.urlencoded({ extended: false }))
 
 //handlebars index page
 app.get('/', (req, res) => {
-    if(req.session.key)
-    {
-        res.redirect('/accueil')
-    }else
-    {
-        res.render('index')
-    }
+    utils.goIfUserAllowed("access", req, res,
+        //go
+        (rsc)=>{
+            res.redirect('/accueil')
+        },
+        //back
+        (err)=>{
+            console.log('na pas acces a la resource car: ' + err)
+            //loop infini mais ne devrai pas arrive
+            res.redirect('/')
+        })
 })
 
 
@@ -69,6 +74,7 @@ app.use('/match', require('./routes/match/match'))
 app.use('/historique', require('./routes/historique/historique'))
 app.use('/fiche', require('./routes/fiche/fiche'))
 app.use('/register', require('./routes/register/register'))
+app.use('/login', require('./routes/login/login'))
 app.use('/logout', require('./routes/logout/logout'))
 app.use('/accueil', require('./routes/accueil/accueil'))
 
@@ -95,3 +101,7 @@ app.post('/', (req, res) => {
 })
 
 app.listen(port, () => console.log('😂😂😂😂 ImproQuebec 😂😂😂😂'))
+
+app.use((req, res, next) => {
+    res.status(404).render('not_found_404');
+})
