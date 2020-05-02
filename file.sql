@@ -123,6 +123,9 @@ DEFAULT CHARACTER SET = latin1;
 
 INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("maxime@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "maxime", 2);
 INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("coach@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "coach", 4);
+INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("coach_audrey@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "coach_audrey", 4);
+INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("coach_ann@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "coach_ann", 4);
+INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("coach_corinne@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "coach_corinne", 4);
 INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("equipe@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "equipe", 3);
 
 CREATE TABLE IF NOT EXISTS `improquebec`.`notifications` (

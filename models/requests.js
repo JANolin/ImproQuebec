@@ -230,8 +230,67 @@ function handle_database_check_notifs(req, callback) {
             }
         });
 }
+
+
+function handle_database_notify_coach(queryFindCoach, callback) {
+    async.waterfall([
+        function(callback) {
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    callback(true);
+                } else {
+                    callback(null,queryFindCoach, connection);
+                }
+            });
+        },
+        function(queryFindCoach, connection, callback) {
+            connection.query(queryFindCoach,function(err,rows){
+                if(!err) {
+                    if(rows == undefined || rows.length < 1)
+                    {
+                        callback('Pas de coach avec ce nom'.red, true)
+                    }else
+                    {
+                        callback(null,rows, connection)
+                    }
+                } else {
+                    callback('GROSSE ERREURE AVEC LA DB POUR TROUVER LE COACH'.bgRed,true)
+                }
+            });
+        },
+
+        function(coach_result, connection, callback) {
+            var queryNotification = "INSERT into notifications(user_id, notification_message) VALUES ('"+coach_result[0].user_id+"', 'Nouveau match a check')"
+            connection.query(queryNotification,function(err,rows){
+                connection.release()
+                if(!err) {
+                    callback('Notification envoye avec succes au coach : '.green + coach_result[0].user_name, false)
+                } else {
+                    //on devrait normalement jamais se rendre ici, mais bon... 
+                    //js parfois...
+                    callback('Notification impossible: le coach n\'existe pas...'.red,true)
+                }
+            });
+        }
+    ],
+
+        //PERMET LE RETOUR APRES LE CALL ASYNC
+        function(err, result){
+            if(typeof(result) === "boolean" && result === true) {
+                console.log(err)
+                callback(true)
+            } else {
+                console.log(err)
+                callback(false)
+            }
+        });
+}
+
+
 module.exports = {
     handle_database_login:handle_database_login, 
     handle_database_register:handle_database_register, 
     handle_database_check_perms:handle_database_check_perms,
-    handle_database_check_notifs:handle_database_check_notifs}
+    handle_database_check_notifs:handle_database_check_notifs,
+    handle_database_notify_coach:handle_database_notify_coach
+}

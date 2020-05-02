@@ -31,14 +31,12 @@ function checkNotifications(req)
                 {
                     for(let i = 0; i < response.length; i++)
                     {
-                        console.log(response)
                         resolve(true)
                         return
                     }
 
                 }else
                 {
-                    console.log('pas de notif')
                     resolve(false)
                     return
                 }

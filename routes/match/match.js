@@ -79,9 +79,23 @@ router.post('/', (req, res) => {
         inputEquipeGagnante1: req.body.inputEquipeGagnante1
     })
 
-    matchReport.save().then(() => console.log("DB: $MATCH$ INFOS SAVED"))
+    matchReport.save().then(() => console.log("Match save dans la db Mongo".green))
+
+    let coach = [req.body.inputEntraineurHote1, req.body.inputEntraineurVisiteur1]
+    notifyCoach(coach)
 
     res.redirect('/match')
 })
+
+async function notifyCoach(coach)
+{
+    for(let i = 0; i < coach.length; i++)
+    {
+        var SQLquery = "SELECT * FROM user_login WHERE user_name='"+coach[i]+"'";
+        handler_db.handle_database_notify_coach(SQLquery, (response) => {
+            // ouais, ya rien... INCROYABLE!
+        });
+    }
+}
 
 module.exports = router

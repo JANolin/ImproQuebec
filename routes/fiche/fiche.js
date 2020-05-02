@@ -70,7 +70,7 @@ router.get('/', (req, res) => { if(req.session.key) {
         current_match.inputPointageEquipeHote1= match[0].inputPointageEquipeHote1
         current_match.inputPointageEquipeVisiteuse1= match[0].inputPointageEquipeVisiteuse1
         current_match.inputEquipeGagnante1= match[0].inputEquipeGagnante1
-        
+
         current_match_arr.push(current_match)
         res.render('fiche', {user_name: req.session.key["user_name"], test: current_match_arr })
     })
