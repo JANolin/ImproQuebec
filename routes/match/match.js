@@ -6,15 +6,15 @@ const async = require('async')
 const handler_db = require('../../models/requests')
 
 router.get('/', (req, res) => {
-
-        utils.goIfUserAllowed('access', req, res, 
-            //go
-        (rsc)=> {
-            utils.renderWithPerms(req, res, rsc)
+    utils.goIfUserAllowed('access', req, res, 
+        //go
+        ()=>{
+            utils.normalRendering(req, res)
         },
-            //back
-        (err)=> {
-            res.redirect('/')
+        //back
+        ()=>{
+            //res.redirect('/')
+            utils.enterRedirect(res)
         })
 })
 

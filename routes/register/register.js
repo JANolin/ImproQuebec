@@ -14,11 +14,11 @@ const passageSalt = 10
 router.get('/', (req, res) => {
     utils.goIfUserAllowed("access", req, res,
         //go
-        (rsc)=>{
-            utils.renderWithPerms(req, res, rsc)
+        ()=>{
+            utils.normalRendering(req, res)
         },
         //back
-        (err)=>{
+        ()=>{
             res.redirect('/')
         })
 })
@@ -35,7 +35,12 @@ router.post('/', (req, res) => {
                 //SI LE COMPTE EXISTE DEJA
                 //MEME REDIRECTION MAIS DANS LE FUTURE IL FAUT FAIRE DES MESSAGES
                 //POUR LES UTILISATEURS (MESSAGES DERREURS)
-                //res.render('register', {error :{invalid_user_already_exist : true} })
+                
+                //TODO CHANGER CA ET LE ELSE. CA UTILISE LANCIEN SYSTEM, QUAND
+                //ON DEVAIT PASSER A LA MAIN LE NOM DE LA RESSOURCE A renderWithPerms
+                //MAIS MAINTENANT ON A MIGRER VERS normalRendering(), ET ON A PAS
+                //BESOIN DE PASSER LA RSC, MAIS I GUESS QUIL VA FALLOIR TROUVER
+                //UNE SOLUTION POUR CE GENRE DE CAS FUCKEs
                 utils.renderWithPerms(req, res, 'register', {invalid_user_already_exist : true})
             }else
             {

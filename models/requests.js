@@ -186,4 +186,52 @@ function handle_database_check_perms(req, rsc, callback) {
         });
 }
 
-module.exports = {handle_database_login:handle_database_login, handle_database_register:handle_database_register, handle_database_check_perms:handle_database_check_perms}
+
+function handle_database_check_notifs(req, callback) {
+
+    async.waterfall([
+        function(callback) {
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    callback(true);
+                } else {
+                    callback(null,connection);
+                }
+            });
+        },
+        function(connection,callback) {
+            var SQLquery = "SELECT * from notifications WHERE user_id = '"+req.session.key.user_id+"'";
+            callback(null,connection,SQLquery);
+        },
+        function(connection,SQLquery,callback) {
+            connection.query(SQLquery,function(err,rows){
+                connection.release()
+                if(!err) {
+                    if(rows == undefined || rows.length < 1)
+                    {
+                        callback('Pas de notif'.red, true)
+                    }else
+                    {
+                        callback(null,rows)
+                    }
+                } else {
+                    callback('GROSSE ERREURE AVEC LA DB POUR LES NOTIFS'.bgRed,true)
+                }
+            });
+        }
+    ],
+
+        //PERMET LE RETOUR APRES LE CALL ASYNC
+        function(err, result){
+            if(typeof(result) === "boolean" && result === true) {
+                callback(null)
+            } else {
+                callback(result)
+            }
+        });
+}
+module.exports = {
+    handle_database_login:handle_database_login, 
+    handle_database_register:handle_database_register, 
+    handle_database_check_perms:handle_database_check_perms,
+    handle_database_check_notifs:handle_database_check_notifs}

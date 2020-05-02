@@ -54,11 +54,11 @@ app.use(express.urlencoded({ extended: false }))
 app.get('/', (req, res) => {
     utils.goIfUserAllowed("access", req, res,
         //go
-        (rsc)=>{
+        ()=>{
             res.redirect('/accueil')
         },
         //back
-        (err)=>{
+        ()=>{
             //loop infini mais ne devrai pas arrive... normalement.
             res.redirect('/')
         })
@@ -76,6 +76,7 @@ app.use('/register', require('./routes/register/register'))
 app.use('/login', require('./routes/login/login'))
 app.use('/logout', require('./routes/logout/logout'))
 app.use('/accueil', require('./routes/accueil/accueil'))
+app.use('/validation', require('./routes/validation/validation'))
 
 app.post('/', (req, res) => {
     handler_db.handle_database_login(req, (response) => {

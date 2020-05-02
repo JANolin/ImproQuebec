@@ -8,11 +8,11 @@ router.get('/', (req, res) => {
 
     utils.goIfUserAllowed("access", req, res,
         //go
-        (rsc)=>{
-            utils.renderWithPerms(req, res, rsc)
+        ()=>{
+            utils.normalRendering(req, res)
         },
         //back
-        (err)=>{
+        ()=>{
             res.redirect('/')
         })
 })
@@ -30,6 +30,13 @@ router.post('/', (req, res) => {
             if(!response) {
                 //res.redirect('/')
                 //res.render('login', {error :{invalid_creds : true} })
+                //
+                
+                //TODO CHANGER CA ET LE ELSE. CA UTILISE LANCIEN SYSTEM, QUAND
+                //ON DEVAIT PASSER A LA MAIN LE NOM DE LA RESSOURCE A renderWithPerms
+                //MAIS MAINTENANT ON A MIGRER VERS normalRendering(), ET ON A PAS
+                //BESOIN DE PASSER LA RSC, MAIS I GUESS QUIL VA FALLOIR TROUVER
+                //UNE SOLUTION POUR CE GENRE DE CAS FUCKEs
                 utils.renderWithPerms(req, res, 'login', {invalid_creds : true})
 
                 //SI SON COMPTE EXISTE

@@ -1,6 +1,7 @@
 const express = require('express')
 const handler_db = require('../models/requests')
 const colors = require('colors')
+const async = require('async')
 
 const ALL_PERMS = {
     access : 1,
@@ -27,7 +28,8 @@ const ALL_RSC = {
     equipe : 6,
     horaire : 7,
     enter : 8,
-    logout : 9
+    logout : 9,
+    validation : 10
 }
 
 function getUserRoles(req) {
@@ -91,7 +93,52 @@ async function goIfUserAllowed(perm, req, res, go, back) {
         rsc = "enter" 
     }
     console.log("Tentative d'acces a : ".magenta + rsc +" avec perms ...".magenta)
-    checkIfUserAllowed(perm, rsc, req).then((msg)=>go(rsc), (err)=>back(err))
+    checkIfUserAllowed(perm, rsc, req).then((msg)=>{go()}, (err)=>{back()})
+    //checkIfUserAllowed(perm, rsc, req).then((msg)=>executeGoStackAsync(goStack), (err)=>executeBackStackAsync(backStack))
+}
+
+function executeGoStackAsync(execStack)
+{
+    Promise.all(execStack).then((msg)=>{console.log(msg)}, ()=>{})
+}
+
+function executeBackStackAsync(execStack)
+{
+    Promise.all(execStack).then((msg)=>{console.log(msg)}, ()=>{})
+}
+
+function normalRendering(req, res, passing)
+{
+    let rsc = req.baseUrl.substring(1);
+    if(rsc === "")
+    {
+        rsc = "enter" 
+    }
+    return new Promise((resolve, reject) => {
+        let userRoles = {} 
+        let dataPassing = passing
+        let userContext = true
+        if(req.session.key === undefined)
+        {
+            userRoles.guest = true
+            userContext = false
+        }else
+        {
+            userRoles = getUserRoles(req) 
+        }
+
+        res.render(rsc, {user_role : userRoles, user_context : userContext, data : dataPassing})
+        resolve('good pour le render')
+    })
+
+}
+
+function enterRedirect(res)
+{
+    return new Promise((resolve, reject) => {
+        res.redirect('/')
+        resolve('good')
+    })
 }
 
 function renderWithPerms(req, res, rsc, passing)
@@ -111,7 +158,11 @@ function renderWithPerms(req, res, rsc, passing)
     res.render(rsc, {user_role : userRoles, user_context : userContext, data : dataPassing})
 }
 
-module.exports = {getUserRoles : getUserRoles,
+module.exports = {
+    getUserRoles : getUserRoles,
     checkRoleUser : checkRoleUser,
     goIfUserAllowed : goIfUserAllowed,
-    renderWithPerms : renderWithPerms}
+    renderWithPerms : renderWithPerms,
+    normalRendering : normalRendering,
+    enterRedirect : enterRedirect
+}

@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `improquebec`.`resources` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
-INSERT INTO resources (resource_name) VALUES('accueil');
+INSERT INTO resources (resource_name) VALUES('accueil'); 
 INSERT INTO resources (resource_name) VALUES('login');
 INSERT INTO resources (resource_name) VALUES('register');
 INSERT INTO resources (resource_name) VALUES('match');
@@ -34,6 +34,7 @@ INSERT INTO resources (resource_name) VALUES('equipe');
 INSERT INTO resources (resource_name) VALUES('horaire');
 INSERT INTO resources (resource_name) VALUES('enter');
 INSERT INTO resources (resource_name) VALUES('logout');
+INSERT INTO resources (resource_name) VALUES('validation');
 
 CREATE TABLE IF NOT EXISTS `improquebec`.`permissions` (
   `permission_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
@@ -100,6 +101,7 @@ INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,6,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,7,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,8,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,9,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,10,1);
 
 -- -----------------------------------------------------
 -- Table `improquebec`.`user_login`
@@ -118,6 +120,25 @@ CREATE TABLE IF NOT EXISTS `improquebec`.`user_login` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 69 
 DEFAULT CHARACTER SET = latin1;
+
+INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("maxime@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "maxime", 2);
+INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("coach@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "coach", 4);
+INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("equipe@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "equipe", 3);
+
+CREATE TABLE IF NOT EXISTS `improquebec`.`notifications` (
+    `notification_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+    `notification_message` VARCHAR(50) NOT NULL COMMENT '',
+    `user_id` INT NOT NULL COMMENT '',
+    PRIMARY KEY (`notification_id`)  COMMENT '',
+
+    CONSTRAINT `fk_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `improquebec`.`user_login` (`user_id`))
+
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+INSERT INTO notifications (notification_message, user_id) VALUES("Notification random", 70);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

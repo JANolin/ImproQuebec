@@ -6,18 +6,13 @@ const utils = require('../../utils/utils')
 
 router.get('/', (req, res) => {
 
-    utils.goIfUserAllowed('access', req, res, 
+    utils.goIfUserAllowed("access", req, res,
         //go
         ()=>{
-            //TODO Passer un message pour dire que bien deco
-            req.session.destroy(()=> {
-                res.redirect('/')
-            })
+            utils.normalRendering(req, res)
         },
         //back
         ()=>{
-            //TODO Redirect vers une page erreur 403
-            //faire ca partout quand la promise fail
             res.redirect('/')
         })
 })
