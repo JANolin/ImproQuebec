@@ -143,6 +143,65 @@ DEFAULT CHARACTER SET = latin1;
 
 INSERT INTO notifications (notification_message, user_id) VALUES("Notification random", 70);
 
+
+CREATE TABLE IF NOT EXISTS `improquebec`.`cegep` (
+  `cegep_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+  `cegep_name` VARCHAR(50) NOT NULL COMMENT '',
+   PRIMARY KEY (`cegep_id`)  COMMENT '')
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+INSERT INTO cegep (cegep_name) VALUES('BDEB');
+INSERT INTO cegep (cegep_name) VALUES('Grasset');
+INSERT INTO cegep (cegep_name) VALUES('Brebeuf');
+
+
+CREATE TABLE IF NOT EXISTS `improquebec`.`equipes` (
+    `equipe_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+    `equipe_name` VARCHAR(50) NOT NULL COMMENT '',
+    `cegep_id` INT NOT NULL COMMENT '',
+    PRIMARY KEY (`equipe_id`)  COMMENT '',
+
+    CONSTRAINT `fk_cegep`
+    FOREIGN KEY (`cegep_id`)
+    REFERENCES `improquebec`.`cegep` (`cegep_id`))
+
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+-- BDEB --
+INSERT INTO equipes (equipe_name, cegep_id) VALUES("Riposte", 1);
+INSERT INTO equipes (equipe_name, cegep_id) VALUES("Replique", 1);
+-- Grasset --
+INSERT INTO equipes (equipe_name, cegep_id) VALUES("Gazon", 2);
+INSERT INTO equipes (equipe_name, cegep_id) VALUES("Gazonette", 2);
+-- Brebeufe --
+INSERT INTO equipes (equipe_name, cegep_id) VALUES("L'intimidation", 3);
+INSERT INTO equipes (equipe_name, cegep_id) VALUES("Les vilans", 3);
+
+
+CREATE TABLE IF NOT EXISTS `improquebec`.`coaches` (
+    `coach_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
+    `coach_name` VARCHAR(50) NOT NULL COMMENT '',
+    `user_id` INT NOT NULL COMMENT '',
+    `equipe_id` INT NOT NULL COMMENT '',
+    PRIMARY KEY (`coach_id`)  COMMENT '',
+
+    CONSTRAINT `fk_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `improquebec`.`user_login` (`user_id`),
+
+    CONSTRAINT `fk_equipe_id`
+    FOREIGN KEY (`equipe_id`)
+    REFERENCES `improquebec`.`equipes` (`equipe_id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+INSERT INTO coaches (coach_name, user_id, equipe_id) VALUES("Jean-Val-Jean", 70, 1);
+INSERT INTO coaches (coach_name, user_id, equipe_id) VALUES("Audrey-Charlotte", 71, 2);
+INSERT INTO coaches (coach_name, user_id, equipe_id) VALUES("Ann-Francoise", 72, 3);
+INSERT INTO coaches (coach_name, user_id, equipe_id) VALUES("Corinne-Saint-Charles", 73, 4);
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

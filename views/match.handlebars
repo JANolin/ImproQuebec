@@ -35,29 +35,58 @@ input[type=textPOINT]{
 </style>
 
 <body>
-    
-
     <form action="match" method="POST" >
         <h1 class="text-center mb-5" style="margin-top: 80px;">Statistiques du match</h1>
             <div class="form-row">
                 <div class="form-inline col-md-6">
                     <label  for="inputEquipeHote1">✊ Équipe hôte : </label>
-                    <input type="text" class="form-control" name="inputEquipHote1" id="inputEquipeHote1" placeholder="Equipe Hote">
+                    <!--<input type="text" class="form-control" name="inputEquipHote1" id="inputEquipeHote1" placeholder="Equipe Hote"> !-->
+
+                    <select class="custom-select col-md-6" name="inputEquipHote1" id="inputEquipHote1">
+                        <option disabled selected value>Equipe</option>
+                        {{#each data.equipes}}
+                        <option value={{this.equipe_name}}>{{this.equipe_name}}</option>
+                        {{/each}}
+                    </select>
+
+
                 </div>
                 <div class="form-inline col-md-6">
                     <label for="inputEquipeVisiteuse1">✋ Équipe Visiteuse : </label>
-                    <input type="text" class="form-control" name="inputEquipVisiteuse1" id="inputEquipVisiteuse1" placeholder="Équipe Visiteuse">
+                    <!-- <input type="text" class="form-control" name="inputEquipVisiteuse1" id="inputEquipVisiteuse1" placeholder="Équipe Visiteuse"> --!>
+
+                    <select class="custom-select col-md-6" name="inputEquipVisiteuse1" id="inputEquipVisiteuse1">
+                        <option disabled selected value>Equipe</option>
+                        {{#each data.equipes}}
+                        <option value={{this.equipe_name}}>{{this.equipe_name}}</option>
+                        {{/each}}
+                    </select>
                 </div>
             </div>
             
             <div class="form-row mb-5">
                 <div class="form-inline col-md-6">
-                    <label for="inputCegepReceveur1">✊ CÉGEP : </label>
-                    <input type="textCEGEP" class="form-control" name="inputCegepReceveur1" id="inputCegepReceveur1" placeholder="CEGEP">
+                    <label for="inputCegepReceveur1">✊ CÉGEP hote: </label>
+                    <!-- <input type="textCEGEP" class="form-control" name="inputCegepReceveur1" id="inputCegepReceveur1" placeholder="CEGEP"> --!>
+
+                    <select class="custom-select col-md-6" name="inputCegepReceveur1" id="inputCegepReceveur1">
+                        <option disabled selected value>CEGEP</option>
+                        {{#each data.cegep}}
+                        <option value={{this.cegep_name}}>{{this.cegep_name}}</option>
+                        {{/each}}
+                    </select>
                 </div>
+
                 <div class="form-inline col-md-6">
-                    <label for="inputCegepVisiteur1">✋ CÉGEP : </label>
-                    <input type="textCEGEP" class="form-control" name="inputCegepVisiteur1" id="inputCegepReceveur1" placeholder="CEGEP">
+                    <label for="inputCegepVisiteur1">✋ CÉGEP visiteur: </label>
+                    <!-- <input type="textCEGEP" class="form-control" name="inputCegepVisiteur1" id="inputCegepReceveur1" placeholder="CEGEP"> --!>
+
+                    <select class="custom-select col-md-6" name="inputCegepVisiteur1" id="inputCegepReceveur1">
+                        <option disabled selected value>CEGEP</option>
+                        {{#each data.cegep}}
+                        <option value={{this.cegep_name}}>{{this.cegep_name}}</option>
+                        {{/each}}
+                    </select>
                 </div>
             </div>
 
@@ -241,7 +270,13 @@ input[type=textPOINT]{
                         <div class="form-row">
                             <div class="form-inline col-md-8">
                                 <label for="inputEntraineurHote1">Ent.</label>
-                                <input type="text" class="form-control" name="inputEntraineurHote1" id="inputEntraineurHote1" placeholder="Entraineur">
+                                <!-- <input type="text" class="form-control" name="inputEntraineurHote1" id="inputEntraineurHote1" placeholder="Entraineur"> --!>
+                                <select class="custom-select col-md-6" name="inputEntraineurHote1" id="inputEntraineurHote1">
+                                    <option disabled selected value>Coach</option>
+                                    {{#each data.coaches}}
+                                    <option value={{this.coach_name}}>{{this.coach_name}}</option>
+                                    {{/each}}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -427,7 +462,13 @@ input[type=textPOINT]{
                         <div class="form-row">
                             <div class="form-inline col-md-8">
                                 <label for="inputEntraineurVisiteur1">Ent.</label>
-                                <input type="text" class="form-control" name= "inputEntraineurVisiteur1" id="inputEntraineurVisiteur1" placeholder="Entraineur">
+                                <!-- <input type="text" class="form-control" name= "inputEntraineurVisiteur1" id="inputEntraineurVisiteur1" placeholder="Entraineur"> --!>
+                                <select class="custom-select col-md-6" name= "inputEntraineurVisiteur1" id="inputEntraineurVisiteur1">
+                                    <option disabled selected value>Coach</option>
+                                    {{#each data.coaches}}
+                                    <option value={{this.coach_name}}>{{this.coach_name}}</option>
+                                    {{/each}}
+                                </select>
                             </div>
                         </div>
                     </div>

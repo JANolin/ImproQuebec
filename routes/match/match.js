@@ -9,7 +9,8 @@ router.get('/', (req, res) => {
     utils.goIfUserAllowed('access', req, res, 
         //go
         ()=>{
-            utils.normalRendering(req, res)
+            //utils.normalRendering(req, res, {cegep})
+            getInfo().then((data)=>{utils.normalRendering(req, res, {cegep : data[0], equipes : data[1], coaches : data[2]})})
         },
         //back
         ()=>{
@@ -17,6 +18,70 @@ router.get('/', (req, res) => {
             utils.enterRedirect(res)
         })
 })
+
+function getInfo()
+{
+    return new Promise(async (resolve, reject) => {
+        handler_db.handle_database_check_associations((response)=>{
+            resolve(response)
+        })
+    })
+}
+
+function getInformationsFeuilleMatch(req)
+{
+    let data = {}
+    return new Promise(async (resolve, reject) => {
+        var query = "SELECT * FROM cegep"
+        handler_db.handle_database_prepare_feuille_match(query, (response) => {
+            if(response)
+            {
+                let cegeps = {}
+                for(let i = 0; i < response.length; i++)
+                {
+                    let currentCegep = response[i]
+                    let queryEquipe = "SELECT * FROM equipes WHERE cegep_id="+response[i].cegep_id+""
+
+                    handler_db.handle_database_prepare_feuille_match(queryEquipe, (responseEquipe) => {
+                        if(responseEquipe)
+                        {
+                            let equipes = {}
+                            console.log('EQUIPES DE '+response[i].cegep_name+': ')
+                            for(let i = 0; i < responseEquipe.length; i++)
+                            {
+                                let currentEquipe = responseEquipe[i]
+                                console.log(responseEquipe[i].equipe_name)
+                                let queryCoach = "SELECT * FROM coaches WHERE equipe_id="+responseEquipe[i].equipe_id+""
+
+                                handler_db.handle_database_prepare_feuille_match(queryCoach, (responseCoach) => {
+                                    if(responseCoach)
+                                    {
+                                        console.log('COACHES DE '+responseEquipe[i].equipe_name+': ')
+                                        for(let i = 0; i < responseCoach.length; i++)
+                                        {
+                                            equipes[currentEquipe.equipe_name] = responseCoach[i].coach_name 
+                                            console.log(responseCoach[i].coach_name)
+                                        }
+                                    }
+                                    //console.log(equipes)
+                                });
+
+                            }
+                            cegeps[currentCegep.cegep_name] = equipes
+                            //console.log(cegeps)
+                        }
+                        //console.log(cegeps)
+                    });
+
+                }
+
+            }
+        });
+
+        resolve(true)
+        return
+    })
+}
 
 router.post('/', (req, res) => {
     const matchReport = new Model.Match({
@@ -91,7 +156,7 @@ async function notifyCoach(coach)
 {
     for(let i = 0; i < coach.length; i++)
     {
-        var SQLquery = "SELECT * FROM user_login WHERE user_name='"+coach[i]+"'";
+        var SQLquery = "SELECT * FROM coaches WHERE coach_name='"+coach[i]+"'";
         handler_db.handle_database_notify_coach(SQLquery, (response) => {
             // ouais, ya rien... INCROYABLE!
         });

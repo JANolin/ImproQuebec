@@ -254,6 +254,7 @@ function handle_database_notify_coach(queryFindCoach, callback) {
                         callback(null,rows, connection)
                     }
                 } else {
+                    console.log(err)
                     callback('GROSSE ERREURE AVEC LA DB POUR TROUVER LE COACH'.bgRed,true)
                 }
             });
@@ -264,7 +265,7 @@ function handle_database_notify_coach(queryFindCoach, callback) {
             connection.query(queryNotification,function(err,rows){
                 connection.release()
                 if(!err) {
-                    callback('Notification envoye avec succes au coach : '.green + coach_result[0].user_name, false)
+                    callback('Notification envoye avec succes au coach : '.green + coach_result[0].coach_name, false)
                 } else {
                     //on devrait normalement jamais se rendre ici, mais bon... 
                     //js parfois...
@@ -286,11 +287,209 @@ function handle_database_notify_coach(queryFindCoach, callback) {
         });
 }
 
+function handle_database_prepare_feuille_match(query, callback) {
+
+    async.waterfall([
+        function(callback) {
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    callback(true);
+                } else {
+                    callback(null,connection);
+                }
+            });
+        },
+        function(connection,callback) {
+            callback(null,connection,query);
+        },
+        function(connection,SQLquery,callback) {
+            connection.query(SQLquery,function(err,response){
+                //connection.release()
+                if(!err) {
+                    if(response == undefined || response.length < 1)
+                    {
+                        callback('Pas de donnees dans la DB'.red, true)
+                    }else
+                    {
+                        for(let i = 0; i < response.length; i++)
+                        {
+                            let currentCegep = response[i]
+                            let queryEquipe = "SELECT * FROM equipes WHERE cegep_id="+response[i].cegep_id+""
+
+                            connection.query(queryEquipe, (err,responseEquipe)=>{
+                                if(responseEquipe != undefined && responseEquipe.length > 0)
+                                {
+                                    console.log('LES EQUIPES DU CEGEP : '+response[i].cegep_name)
+                                    for(let j = 0; j < responseEquipe.length; j++)
+                                    {
+                                        let currentEquipe = responseEquipe[j]
+                                        let queryCoach = "SELECT * FROM coaches WHERE equipe_id="+responseEquipe[j].equipe_id+""
+                                        connection.query(queryCoach, (err,responseCoach)=>{
+                                            if(responseEquipe != undefined && responseEquipe.length > 0)
+                                            {
+                                                console.log('LES COACHES DE LEQUIPE : '+responseEquipe[j].equipe_name)
+                                                for(let k = 0; k < responseCoach.length; k++)
+                                                {
+                                                    console.log(responseCoach[k].coach_name)
+                                                }
+                                            }else
+                                            {
+                                                console.log('pas de coach')
+                                            }
+                                        })
+                                    }
+                                }else
+                                {
+                                    console.log('pas dequipe')
+                                }
+                            })
+
+                        }
+
+                        connection.release()
+                        callback(null,'future array avec les donnes')
+                    }
+                } else {
+                    console.log(err)
+                    callback('GROSSE ERREURE AVEC LA DB POUR LES FEUILLES DE MATCH'.bgRed,true)
+                }
+            });
+        }
+    ],
+
+        //PERMET LE RETOUR APRES LE CALL ASYNC
+        function(err, result){
+            if(typeof(result) === "boolean" && result === true) {
+                console.log(err)
+                callback(null)
+            } else {
+                callback(result)
+            }
+        });
+}
+
+
+function handle_database_check_associations(callback) {
+
+    async.waterfall([
+        function(callback) {
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    callback(true);
+                } else {
+                    callback(null,connection);
+                }
+            });
+        },
+        function(connection,callback) {
+            var queryCegep = "SELECT * FROM cegep"
+            connection.query(queryCegep,function(err,responseCegep){
+                if(!err) {
+                    if(responseCegep == undefined || responseCegep.length < 1)
+                    {
+                        callback('Pas de cegep'.red, true)
+                    }else
+                    {
+                        callback(null,connection,responseCegep)
+                    }
+                } else {
+                    callback('GROSSE ERREURE AVEC LA DB POUR LES NOTIFS'.bgRed,true)
+                }
+            });
+        },
+        function(connection,responseCegep,callback) {
+            let queryEquipe = "SELECT * FROM equipes"
+            connection.query(queryEquipe,function(err,responseEquipe){
+                if(!err) {
+                    if(responseEquipe == undefined || responseEquipe.length < 1)
+                    {
+                        callback('Pas de equipe'.red, true)
+                    }else
+                    {
+                        callback(null,connection,responseCegep,responseEquipe)
+                    }
+                } else {
+                    callback('GROSSE ERREURE AVEC LA DB POUR LES NOTIFS'.bgRed,true)
+                }
+            });
+        },
+        function(connection,responseCegep,responseEquipe,callback) {
+            let queryCoach = "SELECT * FROM coaches"
+            connection.query(queryCoach,function(err,responseCoach){
+                connection.release()
+                if(!err) {
+                    if(responseCoach == undefined || responseCoach.length < 1)
+                    {
+                        callback('Pas de coach'.red, true)
+                    }else
+                    {
+                        callback(null,responseCegep,responseEquipe,responseCoach)
+                    }
+                } else {
+                    callback('GROSSE ERREURE AVEC LA DB POUR LES NOTIFS'.bgRed,true)
+                }
+            });
+        },
+        function(responseCegep,responseEquipe,responseCoach){
+            let data = [responseCegep, responseEquipe, responseCoach] 
+            let equipes = {}
+            let coaches = {}
+            let cegep = {}
+            let ce = {}
+            
+
+            for(let i = 0; i < responseCegep.length; i++)
+            {
+                cegep[responseCegep[i].cegep_name] = []
+                let currentCegep = responseCegep[i]
+                //console.log('Equipe du cegep : ' + currentCegep.cegep_name)
+                for(let j = 0; j < responseEquipe.length; j++)
+                {
+                    if(responseEquipe[j].cegep_id == currentCegep.cegep_id)
+                    {
+                        equipes[responseEquipe[j].equipe_name] = []
+                        //console.log(responseEquipe[j].equipe_name)
+                        let currentEquipe = responseEquipe[j]
+                        //console.log('Coach de l\'equipe : ' + currentEquipe.equipe_name)
+                        for(let k = 0; k < responseCoach.length; k++)
+                        {
+                            if(responseCoach[k].equipe_id == currentEquipe.equipe_id)
+                            {
+                                //console.log(responseCoach[k].coach_name)
+                                equipes[currentEquipe.equipe_name].push(responseCoach[k].coach_name)
+                            }
+                        }
+                        cegep[currentCegep.cegep_name].push(equipes)
+                        equipes = {}
+                    }
+
+                }
+            }
+
+
+            //console.log(equipes)
+            //console.log(cegep.BDEB)
+
+            callback(data, false)
+        }
+    ],
+
+        //PERMET LE RETOUR APRES LE CALL ASYNC
+        function(err, result){
+            if(typeof(result) === "boolean" && result === true) {
+                callback(null)
+            } else {
+                callback(result)
+            }
+        });
+}
 
 module.exports = {
     handle_database_login:handle_database_login, 
     handle_database_register:handle_database_register, 
     handle_database_check_perms:handle_database_check_perms,
     handle_database_check_notifs:handle_database_check_notifs,
-    handle_database_notify_coach:handle_database_notify_coach
+    handle_database_notify_coach:handle_database_notify_coach,
+    handle_database_prepare_feuille_match:handle_database_prepare_feuille_match,
+    handle_database_check_associations:handle_database_check_associations
 }
