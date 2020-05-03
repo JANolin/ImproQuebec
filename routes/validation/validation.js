@@ -7,11 +7,10 @@ const utils = require('../../utils/utils')
 router.get('/', (req, res) => {
     if(req.query.id != undefined)
     {
-        console.log('ya de la marde icitte')
-        utils.goIfUserAllowed("access", req, res,
+        utils.goIfUserAllowed("update", req, res,
             //go
             ()=>{
-                validation(req, req.query.id).then((result)=>{utils.normalRendering(req, res)})
+                validation(req, req.query.id).then((result)=>{res.redirect('/validation')})
             }
             ,
             //back
@@ -24,8 +23,9 @@ router.get('/', (req, res) => {
         utils.goIfUserAllowed("access", req, res,
             //go
             ()=>{
-                var data = getFeuilleAValider(req)
-                utils.normalRendering(req, res, {data : data})
+                getFeuilleAValider(req).then((data)=>{
+                        utils.normalRendering(req, res, {data : data})
+                })
             },
             //back
             ()=>{
@@ -34,27 +34,45 @@ router.get('/', (req, res) => {
     }
 })
 
-
-function getFeuilleAValider(req)
+async function getFeuilleAValider(req)
 {
     var all_history = new Array()
-    Model.Match.find(function (err, match) {
+    await Model.Match.find(async function (err, match) {
         if (err) return console.error(err)
 
-        for(let i = 0; i < match.length; i++)
-        {
-            let current_match = new Object() 
-            current_match.inputEquipHote1= match[i].inputEquipHote1
-            current_match.inputEquipVisiteuse1= match[i].inputEquipVisiteuse1
-            current_match.inputPointageEquipeHote1= match[i].inputPointageEquipeHote1
-            current_match.inputPointageEquipeVisiteuse1= match[i].inputPointageEquipeVisiteuse1
-            current_match.inputEquipeGagnante1= match[i].inputEquipeGagnante1
-            current_match.id= match[i]._id;
-            all_history.push(current_match)
-        }
+        await handler_db.handle_database_find_validation_perso(req, (response) => {
+            if(response == undefined)
+            {
+                console.log('pas de validation a faire')
+
+            }else
+            {
+                for(let i = 0; i < match.length; i++)
+                {
+                    for(let j = 0; j < response.length; j++)
+                    {
+                        if(response[j].notification_match_id == match[i]._id)
+                        {
+                            let current_match = new Object()
+                            current_match.inputEquipHote1= match[i].inputEquipHote1
+                            current_match.inputEquipVisiteuse1= match[i].inputEquipVisiteuse1
+                            current_match.inputPointageEquipeHote1= match[i].inputPointageEquipeHote1
+                            current_match.inputPointageEquipeVisiteuse1= match[i].inputPointageEquipeVisiteuse1
+                            current_match.inputEquipeGagnante1= match[i].inputEquipeGagnante1
+                            current_match.id= match[i]._id;
+                            all_history.push(current_match)
+                        }
+                    }
+                }
+            }
+        });
+
+
     })
+    //console.log(all_history)
     return all_history
 }
+
 
 function validation(req, matchId)
 {

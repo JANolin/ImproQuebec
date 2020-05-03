@@ -102,6 +102,7 @@ INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,7,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,8,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,9,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,10,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,10,5);
 
 -- -----------------------------------------------------
 -- Table `improquebec`.`user_login`

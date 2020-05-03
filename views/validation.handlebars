@@ -1,3 +1,4 @@
+{{#if data.data}}
 <br>
 <table class="table mt-5">
     <thead class="thead-dark">
@@ -25,3 +26,8 @@
         {{/each}}
     </tbody>
 </table>
+{{else}}
+<div class="alert alert-dark" role="alert">
+    Vous n'avez pas de validation a faire pour le moment
+</div>
+{{/if}}
