@@ -43,7 +43,6 @@ async function getFeuilleAValider(req)
         await handler_db.handle_database_find_validation_perso(req, (response) => {
             if(response == undefined)
             {
-                console.log('pas de validation a faire')
 
             }else
             {
@@ -69,7 +68,6 @@ async function getFeuilleAValider(req)
 
 
     })
-    //console.log(all_history)
     return all_history
 }
 
@@ -86,13 +84,11 @@ function validation(req, matchId)
             handler_db.handle_database_validation_feuille(req, matchId, (response) => {
                 if(response == undefined)
                 {
-                    console.log('pas good, feuille pas delete')
                     resolve(false)
                     return
 
                 }else
                 {
-                    console.log('good feuille delete')
                     resolve(true)
                     return
                 }
