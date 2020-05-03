@@ -144,20 +144,23 @@ router.post('/', (req, res) => {
         inputEquipeGagnante1: req.body.inputEquipeGagnante1
     })
 
-    matchReport.save().then(() => console.log("Match save dans la db Mongo".green))
+    //matchReport.save((err, room)=>{console.log(room.id)}).then((err, room) => console.log("Match save dans la db Mongo".green +room.id))
+    matchReport.save((err, room)=>{
 
-    let coach = [req.body.inputEntraineurHote1, req.body.inputEntraineurVisiteur1]
-    notifyCoach(coach)
+        let matchId = room.id
+        let coach = [req.body.inputEntraineurHote1, req.body.inputEntraineurVisiteur1]
+        notifyCoach(coach, matchId)
+    })
 
     res.redirect('/match')
 })
 
-async function notifyCoach(coach)
+async function notifyCoach(coach, matchId)
 {
     for(let i = 0; i < coach.length; i++)
     {
         var SQLquery = "SELECT * FROM coaches WHERE coach_name='"+coach[i]+"'";
-        handler_db.handle_database_notify_coach(SQLquery, (response) => {
+        handler_db.handle_database_notify_coach(SQLquery, matchId, (response) => {
             // ouais, ya rien... INCROYABLE!
         });
     }

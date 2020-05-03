@@ -131,6 +131,7 @@ INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES(
 CREATE TABLE IF NOT EXISTS `improquebec`.`notifications` (
     `notification_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
     `notification_message` VARCHAR(50) NOT NULL COMMENT '',
+    `notification_match_id` VARCHAR(80) NOT NULL COMMENT '',
     `user_id` INT NOT NULL COMMENT '',
     PRIMARY KEY (`notification_id`)  COMMENT '',
 
@@ -140,9 +141,6 @@ CREATE TABLE IF NOT EXISTS `improquebec`.`notifications` (
 
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
-
-INSERT INTO notifications (notification_message, user_id) VALUES("Notification random", 70);
-
 
 CREATE TABLE IF NOT EXISTS `improquebec`.`cegep` (
   `cegep_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
@@ -201,6 +199,7 @@ INSERT INTO coaches (coach_name, user_id, equipe_id) VALUES("Jean-Val-Jean", 70,
 INSERT INTO coaches (coach_name, user_id, equipe_id) VALUES("Audrey-Charlotte", 71, 2);
 INSERT INTO coaches (coach_name, user_id, equipe_id) VALUES("Ann-Francoise", 72, 3);
 INSERT INTO coaches (coach_name, user_id, equipe_id) VALUES("Corinne-Saint-Charles", 73, 4);
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

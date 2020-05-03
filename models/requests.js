@@ -33,9 +33,7 @@ const pool = mysql.createPool({
 function handle_database_login(req,callback) {
     console.log("Tentative de connexion par : ".cyan + req.body.inputUsername1 + " ...".cyan)
 
-    async.waterfall([
-        function(callback) {
-            pool.getConnection(function(err,connection){
+    async.waterfall([ function(callback) { pool.getConnection(function(err,connection){
                 if (err) {
                     callback(true);
                 } else {
@@ -232,7 +230,7 @@ function handle_database_check_notifs(req, callback) {
 }
 
 
-function handle_database_notify_coach(queryFindCoach, callback) {
+function handle_database_notify_coach(queryFindCoach, matchId, callback) {
     async.waterfall([
         function(callback) {
             pool.getConnection(function(err,connection){
@@ -261,7 +259,7 @@ function handle_database_notify_coach(queryFindCoach, callback) {
         },
 
         function(coach_result, connection, callback) {
-            var queryNotification = "INSERT into notifications(user_id, notification_message) VALUES ('"+coach_result[0].user_id+"', 'Nouveau match a check')"
+            var queryNotification = "INSERT into notifications(user_id, notification_message, notification_match_id) VALUES ('"+coach_result[0].user_id+"', 'Nouveau match a check', '"+matchId+"')"
             connection.query(queryNotification,function(err,rows){
                 connection.release()
                 if(!err) {
@@ -484,6 +482,77 @@ function handle_database_check_associations(callback) {
         });
 }
 
+function handle_database_validation_feuille(req, matchId,callback) {
+
+    async.waterfall([
+        function(callback) {
+            pool.getConnection(function(err,connection){
+                if (err) {
+                    callback(true);
+                } else {
+                    callback(null,connection);
+                }
+            });
+        },
+        function(connection,callback) {
+            var queryCegep = "SELECT * FROM coaches WHERE user_id = '"+req.session.key['user_id']+"'"
+
+            connection.query(queryCegep,function(err,responseCoach){
+                if(!err) {
+                    if(responseCoach == undefined || responseCoach.length < 1)
+                    {
+                        callback('Pas de coaches'.red, true)
+                    }else
+                    {
+                        callback(null,connection,responseCoach)
+                    }
+                } else {
+                    callback('GROSSE ERREURE AVEC LA DB POUR LES VALIDATIONS'.bgRed,true)
+                }
+            });
+        },
+        function(connection,responseCoach,callback) {
+            let queryEquipe = "SELECT * FROM notifications WHERE user_id = '"+req.session.key['user_id']+"' AND notification_match_id = '"+matchId+"'"
+            connection.query(queryEquipe,function(err,responseNotif){
+                if(!err) {
+                    if(responseNotif == undefined || responseNotif.length < 1)
+                    {
+                        callback('Pas de feuilles a valider comme ca'.red, true)
+                    }else
+                    {
+                        callback(null,connection)
+                    }
+                } else {
+                    callback('GROSSE ERREURE AVEC LA DB POUR LES NOTIFS'.bgRed,true)
+                }
+            });
+        },
+        function(connection, callback) {
+            let queryDelete = "DELETE FROM notifications WHERE user_id = '"+req.session.key['user_id']+"' AND notification_match_id = '"+matchId+"'"
+            connection.query(queryDelete,function(err,responseDelete){
+                connection.release()
+                if(!err) {
+                        callback(null,false)
+                } else {
+                    //on devrait jamais se rendre la, mais bon...
+                    // a moins que?
+                    callback('GROSSE ERREURE AVEC LA DB POUR LES NOTIFS A VALIDER'.bgRed,true)
+                }
+            });
+        }
+    ],
+
+        //PERMET LE RETOUR APRES LE CALL ASYNC
+        function(err, result){
+            if(typeof(result) === "boolean" && result === true) {
+                console.log(err)
+                callback(null)
+            } else {
+                callback(result)
+            }
+        });
+}
+
 module.exports = {
     handle_database_login:handle_database_login, 
     handle_database_register:handle_database_register, 
@@ -491,5 +560,6 @@ module.exports = {
     handle_database_check_notifs:handle_database_check_notifs,
     handle_database_notify_coach:handle_database_notify_coach,
     handle_database_prepare_feuille_match:handle_database_prepare_feuille_match,
-    handle_database_check_associations:handle_database_check_associations
+    handle_database_check_associations:handle_database_check_associations,
+    handle_database_validation_feuille:handle_database_validation_feuille
 }

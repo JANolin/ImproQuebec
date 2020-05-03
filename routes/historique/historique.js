@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
         //go
         ()=>{
             var data = getHistorique()
-            console.log(data)
             utils.normalRendering(req, res, {data : data})
         },
         //back
