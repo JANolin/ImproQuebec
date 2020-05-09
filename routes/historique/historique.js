@@ -7,8 +7,9 @@ router.get('/', (req, res) => {
     utils.goIfUserAllowed('access', req, res, 
         //go
         ()=>{
-            var data = getHistorique()
-            utils.normalRendering(req, res, {data : data})
+            getHistorique().then((data)=>{
+                utils.normalRendering(req, res, {data : data})
+            })
         },
         //back
         ()=>{
@@ -16,10 +17,11 @@ router.get('/', (req, res) => {
         })
 })
 
-function getHistorique()
+async function getHistorique()
 {
     var all_history = new Array()
-    Model.Match.find(function (err, match) {
+
+    await Model.Match.find(function (err, match) {
         if (err) return console.error(err)
 
         for(let i = 0; i < match.length; i++)
@@ -86,7 +88,8 @@ function getHistorique()
             all_history.push(current_match)
 
         }
-    })
+    }).then(()=>{console.log('end')})
+
     return all_history
 }
 
