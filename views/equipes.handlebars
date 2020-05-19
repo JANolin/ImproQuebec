@@ -4,14 +4,13 @@
         <tr>
             <th scope="col" style="width:60%">Equipe</th>
             <th scope="col" style="width:30%"></th>
-            <th scope="col" style="width:10%"> <a type="button" class="btn btn-success" href="/ajoutequipe"> Ajouter une equipe </a> </th>
         </tr>
     </thead>
     <tbody>
-        {{#each meta}}
+        {{#each data.data}}
         <tr>
-            <td>{{nomEquipe}}</td> 
-            <td><a class="nav-link" href="/equipe?id={{id}}">Informations supplementaires</a></td>
+            <td>{{equipeName}}</td> 
+            <td><a class="nav-link" href="/equipe?id={{equipeId}}">Informations supplementaires</a></td>
         </tr>
         {{/each}}
     </tbody>

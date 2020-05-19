@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
             //go
             ()=>{
                 getFeuilleAValider(req).then((data)=>{
-                        utils.normalRendering(req, res, {data : data})
+                    utils.normalRendering(req, res, {data : data})
                 })
             },
             //back
@@ -36,14 +36,14 @@ router.get('/', (req, res) => {
 
 async function getFeuilleAValider(req)
 {
-    var all_history = new Array()
+    var all_history = [] 
     await Model.Match.find(async function (err, match) {
         if (err) return console.error(err)
 
         await handler_db.handle_database_find_validation_perso(req, (response) => {
             if(response == undefined)
             {
-
+                console.log('ha')
             }else
             {
                 for(let i = 0; i < match.length; i++)
@@ -52,7 +52,7 @@ async function getFeuilleAValider(req)
                     {
                         if(response[j].notification_match_id == match[i]._id)
                         {
-                            let current_match = new Object()
+                            let current_match = {}
                             current_match.inputEquipHote1= match[i].inputEquipHote1
                             current_match.inputEquipVisiteuse1= match[i].inputEquipVisiteuse1
                             current_match.inputPointageEquipeHote1= match[i].inputPointageEquipeHote1
@@ -65,9 +65,8 @@ async function getFeuilleAValider(req)
                 }
             }
         });
-
-
     })
+
     return all_history
 }
 

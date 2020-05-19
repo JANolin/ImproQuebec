@@ -29,7 +29,9 @@ const ALL_RSC = {
     horaire : 7,
     enter : 8,
     logout : 9,
-    validation : 10
+    validation : 10,
+    equipes : 11,
+    ajoutequipe : 12
 }
 
 function getUserRoles(req) {

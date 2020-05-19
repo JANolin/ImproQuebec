@@ -5,28 +5,15 @@ const mongo = require('mongodb')
 const utils = require('../../utils/utils')
 
 router.get('/', (req, res) => {
-    if(req.session.key)
-    {
-        if(utils.checkRoleUser(req, 'admin'))
-        {
-            res.render('ajoutequipe', {user_context: true, user_role: utils.getUserRoles(req)})
-
-            Model.Match.find(function (err, match) {
-                if (err) return console.error(err);
-            })
-        }else
-        {
+    utils.goIfUserAllowed("access", req, res,
+        //go
+        ()=>{
+            utils.normalRendering(req, res)
+        },
+        //back
+        ()=>{
             res.redirect('/')
-        }
-
-    }else
-    {
-        res.redirect('/')
-    }
-})
-
-router.get('/:id', (req, res) => {
-    console.log(req.params.id)
+        })
 })
 
 router.post('/', (req, res) => {
@@ -51,9 +38,8 @@ router.post('/', (req, res) => {
         inputNomEntraineur: req.body.inputNombreEntraineur,
     })
 
-    nouvelleEquipe.save().then(() => console.log("DB: $MATCH$ INFOS SAVED"))
+    nouvelleEquipe.save()
 
-    //console.log(req.body)
     res.redirect('/equipes')
 })
 

@@ -19,8 +19,16 @@
                     <a class="nav-link" href="/validation">Validation des feuilles de match</a>
                 </li>
                 {{/if}}
+                {{#if user_role.admin}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/ajoutequipe">Ajout equipe</a>
+                </li>
+                {{/if}}
                 <li class="nav-item">
                     <a class="nav-link" href="/historique">Historique</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/equipes">Equipes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/horaire">Horaire</a>

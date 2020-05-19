@@ -35,6 +35,9 @@ INSERT INTO resources (resource_name) VALUES('horaire');
 INSERT INTO resources (resource_name) VALUES('enter');
 INSERT INTO resources (resource_name) VALUES('logout');
 INSERT INTO resources (resource_name) VALUES('validation');
+INSERT INTO resources (resource_name) VALUES('equipe');
+INSERT INTO resources (resource_name) VALUES('equipes');
+INSERT INTO resources (resource_name) VALUES('ajoutequipe');
 
 CREATE TABLE IF NOT EXISTS `improquebec`.`permissions` (
   `permission_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
@@ -75,6 +78,7 @@ INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(2,6,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(2,7,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(2,8,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(2,9,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(2,11,1);
 
 -- GUESS --
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(5,1,1);
@@ -84,6 +88,7 @@ INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(5,5,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(5,6,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(5,7,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(5,8,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(5,11,1);
 
 -- EQUIPE --
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(3,1,1);
@@ -93,6 +98,7 @@ INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(3,6,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(3,7,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(3,8,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(3,9,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(3,11,1);
 
 -- COACH --
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,1,1);
@@ -103,6 +109,22 @@ INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,8,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,9,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,10,1);
 INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,10,5);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(4,11,1);
+
+-- ADMIN --
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,1,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,2,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,3,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,4,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,5,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,6,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,7,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,8,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,9,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,10,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,10,5);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,11,1);
+INSERT INTO permissions_god (role_id, resource_id, permission_id) VALUES(1,12,1);
 
 -- -----------------------------------------------------
 -- Table `improquebec`.`user_login`
@@ -128,6 +150,7 @@ INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES(
 INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("coach_ann@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "coach_ann", 4);
 INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("coach_corinne@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "coach_corinne", 4);
 INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("equipe@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "equipe", 3);
+INSERT INTO user_login (user_email, user_password, user_name, user_role) VALUES("adminl@gmail.com", "$2y$10$HsaVruiGwHigdGhou4MxbeZcPsjWkOBEVCD13GZjzIlBBkm0/Pb3G", "admin", 1);
 
 CREATE TABLE IF NOT EXISTS `improquebec`.`notifications` (
     `notification_id` INT NOT NULL AUTO_INCREMENT COMMENT '',
