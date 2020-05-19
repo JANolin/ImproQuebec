@@ -670,26 +670,53 @@ input[type=textPOINT]{
                         </td>
                     </tr-->
             
-            <h1 class="text-center mb-5"> <u>Resultats Finaux</u> </h1>
 
-                    <div class="col-12 mb-5">
-                        <div class="form-row">
-                            <div class="form-group col-sm">
-                                <input type="text" class="form-control" name="inputPointageEquipeHote1" id="inputPointageEquipeHote1" placeholder="#">
+                    <div class="container">
+                        <div class="row justify-content-md-center">
+                            <div class="col col-lg-2">
                             </div>
-                                <h1 class="text-center">A</h1>
-                            <div class="form-group col-sm">
-                                <input type="text" class="form-control" name="inputPointageEquipeVisiteuse1" id="inputPointageEquipeVisiteuse1" placeholder="#">
+                            <div class="col-md-auto">
+                                <h1 class="text-center mb-5"> <u>Pointage final</u> </h1>
+                            </div>
+                            <div class="col col-lg-2">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col col-lg-2">
+                                <input type="text" class="form-control text-center" name="inputPointageEquipeHote1" id="inputPointageEquipeHote1" placeholder="#">
+                            </div>
+                            <div class="col">
+                                <h1 class="text-center mb-5"> <b>A</b> </h1>
+                            </div>
+                            <div class="form-group col col-lg-2">
+                                <input type="text" class="form-control text-center" name="inputPointageEquipeVisiteuse1" id="inputPointageEquipeVisiteuse1" placeholder="#">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <br>
+
+                    <h1 class="text-center mb-5"> <u>En faveur de</u> </h1>
+
+                    <div class="container mb-5">
+                        <div class="row">
+                            <div class="col-sm">
+                            </div>
+                            <div class="col-8 d-flex justify-content-center">
+                                <select class="custom-select col-md-6" name="inputEquipeGagnante1" id="inputEquipeGagnante1">
+                                    <option disabled selected value>Equipe</option>
+                                    {{#each data.equipes}}
+                                    <option value={{this.equipe_name}}>{{this.equipe_name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                            <div class="col-sm">
                             </div>
                         </div>
                     </div>
 
-            <h3 class="text-center mb-2">EN FAVEUR DE</h3>
-
-            <div class="form-group">
-                <input type="text" class="form-control" name="inputEquipeGagnante1" id="inputEquipeGagnante1" placeholder="">
-            </div>
-            
-            <button type="submit" class="btn btn-success mb-5">Envoyer</button>
+                    <button type="submit" class="btn btn-success btn-block mb-5">Envoyer</button>
     </form>
 </body>
