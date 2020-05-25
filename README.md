@@ -21,6 +21,37 @@ BdeB 2020
 5. [Créez votre compte Mysql selon votre .env]
 6. Chargez le fichier file.sql à la racine du projet dans Mysql
 
+## Vues
+Connexion: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/connexion.PNG "Connexion")
+
+Inscription: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/inscription.PNG "Inscription")
+
+Accueil guest: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/acceuil_guest.PNG "Accueil guest")
+
+Historique: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/historique.PNG "Historique")
+
+Équipes: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/equipes.PNG "Équipes")
+
+Accueil coach: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/accueil_coach.PNG "Accueil coach")
+
+Validation des feuilles: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/validation_feuille.PNG "Validation feuille")
+
+Aucune validation: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/validation_vide.PNG "Validation feuille vide")
+
+Accueil équipe: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/acceuil_equipe.PNG "Accueil Équipe")
+
+Feuille de match: 
+![alt text](https://github.com/JANolin/ImproQuebec/blob/master/VUES/feuille_match.PNG "Feuille de match")
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
